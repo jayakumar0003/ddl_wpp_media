@@ -96,7 +96,7 @@ const HomePage = () => {
       <Header />
 
       {/* Title row – appears below header when expanded */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {isExpanded && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -111,13 +111,13 @@ const HomePage = () => {
               <div className="text-3xl sm:text-3xl font-light tracking-wider font-display">
                 Welcome To
               </div>
-              <div className="text-3xl sm:text-4xl font-black font-cinzel leading-tight ">
+              <div className="text-3xl sm:text-4xl font-black  leading-tight ">
                 DDl
               </div>
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       {/* Main content area */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 pt-6">
@@ -125,12 +125,12 @@ const HomePage = () => {
           /* Centered title + Go button */
           <>
             <motion.div layoutId="title" className="text-center mb-8 space-y-4">
-              <div className="text-dark-blue text-4xl sm:text-6xl font-light tracking-wider font-display">
-                Welcome To
+              <div className="text-dark-blue text-4xl sm:text-6xl font-normal tracking-wider ">
+                Welcome To <span className="font-bold ">DDL</span>
               </div>
-              <div className="text-dark-blue text-4xl sm:text-6xl font-black font-cinzel leading-tight">
-                DDl
-              </div>
+              <p className="text-mg text-dark-blue/80 ">
+              An Integrated One-Stop Solution Enabling Data-Driven Linear Campaign Planning
+              </p>
             </motion.div>
 
             <motion.button
@@ -153,7 +153,7 @@ const HomePage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="w-full max-w-7xl  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {menuItems.map((item, index) => {
               const Icon = item.icon;
@@ -181,11 +181,11 @@ const HomePage = () => {
                   <div className="flex items-center text-center gap-3">
                     <div className="p-3 bg-lemon/30 rounded-full transition-all duration-300 group-hover:bg-lemon/60 group-hover:shadow-lg">
                       <Icon
-                        size={32}
+                        size={28}
                         className="text-dark-blue/70 group-hover:text-dark-blue group-hover:scale-110 transition-all duration-300"
                       />
                     </div>
-                    <span className=" text-dark-blue font-bold text-md transition-all duration-300 group-hover:text-dark-blue">
+                    <span className=" text-dark-blue font-medium text-mg transition-all duration-300 group-hover:text-dark-blue">
                       {item.name}
                     </span>
                   </div>

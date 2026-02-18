@@ -15,7 +15,6 @@ const Header = () => {
         <img src={logo} alt="WPP Media" className="h-10 sm:h-20 object-contain" />
       </motion.div>
 
-     
 
       {/* User Guide button with slide-in from right and border */}
       <div className="flex items-center gap-6">
@@ -26,7 +25,7 @@ const Header = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <span className="text-sm text-dark-blue font-medium tracking-wide">
+          <span className="text-sm text-dark-blue font-normal tracking-wide">
             User Guide
           </span>
         </motion.div>

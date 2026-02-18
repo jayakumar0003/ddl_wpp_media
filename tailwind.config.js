@@ -4,9 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Bricolage Grotesque"', 'sans-serif'],
-        display: ['"Bricolage Grotesque"', 'sans-serif'],
-        cinzel: ['"Cinzel Decorative"', 'serif'],   // ← new
+        sans: ['"Montserrat"', 'sans-serif'], // Global default
       },
       colors: {
         lemon: '#B9FD56',
