@@ -178,14 +178,14 @@ const HomePage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  <div className="flex items-center text-center gap-3">
+                  <div className="flex items-center text-center gap-2">
                     <div className="p-3 bg-lemon/30 rounded-full transition-all duration-300 group-hover:bg-lemon/60 group-hover:shadow-lg">
                       <Icon
                         size={28}
                         className="text-dark-blue/70 group-hover:text-dark-blue group-hover:scale-110 transition-all duration-300"
                       />
                     </div>
-                    <span className=" text-dark-blue font-medium text-mg transition-all duration-300 group-hover:text-dark-blue">
+                    <span className=" text-dark-blue font-semibold text-sm transition-all duration-300 group-hover:text-dark-blue">
                       {item.name}
                     </span>
                   </div>

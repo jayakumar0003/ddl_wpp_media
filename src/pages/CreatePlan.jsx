@@ -113,13 +113,13 @@ const CreatePlan = () => {
             />
           </div>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-dark-blue text-2xl sm:text-3xl font-bold"
           >
             DDL
-          </motion.div>
+          </motion.div> */}
 
           <motion.div
             className="flex items-center gap-2 px-3 py-2 rounded-full bg-lemon/40 border-2 border-dark-blue"
