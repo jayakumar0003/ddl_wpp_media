@@ -19,7 +19,7 @@ const menuItems = [
   { name: "Create Plan", icon: FileText, path: "/create-plan" },
   { name: "Actualize Plan", icon: BarChart, path: "/actualize-plan" },
   { name: "Upload VideoAmp CSV", icon: Upload, path: "/upload" },
-  { name: "Documentation", icon: BookOpen, path: "/docs" },
+  { name: "Documentation", icon: BookOpen, path: "/documentation" },
   { name: "Audiences", icon: Users, path: "/audiences" },
   { name: "VA Campaign Planning", icon: Calendar, path: "/va-planning" },
   { name: "Datasource Groups", icon: Database, path: "/datasources" },
@@ -39,7 +39,7 @@ const HomePage = () => {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
-
+      
       {/* Animated blobs (unchanged) */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div

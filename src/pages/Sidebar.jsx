@@ -7,15 +7,16 @@ const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
 
   const menuItems = [
-    { name: 'Create Plan', icon: FileText, path: '/create-plan' },
-    { name: 'Actualize Plan', icon: BarChart, path: '/actualize-plan' },
-    { name: 'Upload VideoAmp CSV', icon: Upload, path: '/upload' },
-    { name: 'Documentation', icon: BookOpen, path: '/docs' },
-    { name: 'Audiences', icon: Users, path: '/audiences' },
-    { name: 'VA Campaign Planning', icon: Calendar, path: '/va-planning' },
-    { name: 'Datasource Groups', icon: Database, path: '/datasources' },
-    { name: 'Ad Measurement Reports', icon: FileCheck, path: '/reports' },
+    { name: "Create Plan", icon: FileText, path: "/create-plan" },
+    { name: "Actualize Plan", icon: BarChart, path: "/actualize-plan" },
+    { name: "Upload VideoAmp CSV", icon: Upload, path: "/upload" },
+    { name: "Documentation", icon: BookOpen, path: "/documentation" },
+    { name: "Audiences", icon: Users, path: "/audiences" },
+    { name: "VA Campaign Planning", icon: Calendar, path: "/va-planning" },
+    { name: "Datasource Groups", icon: Database, path: "/datasources" },
+    { name: "Ad Measurement Reports", icon: FileCheck, path: "/reports" },
   ];
+  
 
   return (
     <AnimatePresence>
@@ -46,7 +47,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                     navigate(item.path);
                     onClose(); // optional: close after navigation
                   }}
-                  className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
+                  className={`w-full flex items-center gap-4 px-2 py-3 rounded-xl transition-all duration-200 group ${
                     isActive ? 'bg-lemon/30' : 'hover:bg-lemon/20'
                   }`}
                   whileHover={{ x: 5 }}
