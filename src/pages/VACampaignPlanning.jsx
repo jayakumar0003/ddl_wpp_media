@@ -455,7 +455,7 @@ const VACampaignPlanning = () => {
         >
           <main className="px-4 py-3">
             {/* Main content container */}
-            <div className="w-full max-w-7xl mx-auto bg-white rounded-xl p-4 sm:p-5 shadow-lg">
+            <div className="w-full max-w-8xl mx-auto bg-white rounded-xl p-4 sm:p-5 shadow-lg">
               {/* Page Header - Blue */}
               <div className="bg-dark-blue rounded-lg p-3 mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2">
