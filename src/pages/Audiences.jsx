@@ -5,8 +5,7 @@ import {
   Search, 
   Filter, 
   X, 
-  Eye, 
-  MoreVertical,
+  Eye,
   ArrowLeft,
   ChevronLeft,
   ChevronRight
@@ -22,20 +21,23 @@ const Audiences = () => {
   const [loading, setLoading] = useState(true);
   const [audiences, setAudiences] = useState([]);
   const [filteredAudiences, setFilteredAudiences] = useState([]);
+  const [selectedAudience, setSelectedAudience] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Filter states
   const [searchTerm, setSearchTerm] = useState('');
   const [currencyFilter, setCurrencyFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [dropdownOpen, setDropdownOpen] = useState(null);
 
   const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
-const [appliedCurrencyFilter, setAppliedCurrencyFilter] = useState('');
-const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
+  const [appliedCurrencyFilter, setAppliedCurrencyFilter] = useState('');
+  const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
   
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
-  // Temporary data
+  // Temporary data with enhanced fields
   const tempAudiences = [
     {
       id: 421995,
@@ -43,7 +45,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "ready"
+      status: "ready",
+      description: "Comprehensive audience for Otsuka healthcare campaign targeting multiple demographic segments",
+      createdDate: "2024-01-15",
+      lastModified: "2024-02-20",
+      owner: "John Smith",
+      tags: ["healthcare", "otsuka", "crossix", "demographic"]
     },
     {
       id: 385059,
@@ -51,7 +58,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 23,
-      status: "ready"
+      status: "ready",
+      description: "Test household demographic audience for quality assurance",
+      createdDate: "2024-02-10",
+      lastModified: "2024-03-01",
+      owner: "Sarah Johnson",
+      tags: ["test", "household", "qa"]
     },
     {
       id: 403807,
@@ -59,7 +71,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 25,
-      status: "ready"
+      status: "ready",
+      description: "Test audience for Otsuka demographic targeting with time series data",
+      createdDate: "2024-01-20",
+      lastModified: "2024-02-15",
+      owner: "Mike Wilson",
+      tags: ["otsuka", "test", "timeseries"]
     },
     {
       id: 421859,
@@ -67,7 +84,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "ready"
+      status: "ready",
+      description: "Q1 2026 Otsuka audience combining financial behavior, real estate interest, and age-based buying patterns",
+      createdDate: "2024-03-01",
+      lastModified: "2024-03-15",
+      owner: "Emily Chen",
+      tags: ["financial", "real-estate", "q126", "age-based"]
     },
     {
       id: 386334,
@@ -75,7 +97,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "ready"
+      status: "ready",
+      description: "Otsuka audience focused on financial behavior and real estate interest with age segmentation",
+      createdDate: "2024-02-05",
+      lastModified: "2024-02-28",
+      owner: "David Brown",
+      tags: ["financial", "real-estate", "age-based"]
     },
     {
       id: 343465,
@@ -83,7 +110,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 25,
-      status: "ready"
+      status: "ready",
+      description: "TJMaxx open IDs for Q1 2025 retail campaign targeting frequent shoppers",
+      createdDate: "2024-01-10",
+      lastModified: "2024-02-18",
+      owner: "Lisa Anderson",
+      tags: ["retail", "tjmaxx", "openids", "q12025"]
     },
     {
       id: 343297,
@@ -91,7 +123,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 25,
-      status: "ready"
+      status: "ready",
+      description: "Marshalls open IDs for Q1 2025 retail campaign",
+      createdDate: "2024-01-12",
+      lastModified: "2024-02-19",
+      owner: "Lisa Anderson",
+      tags: ["retail", "marshalls", "openids", "q12025"]
     },
     {
       id: 405455,
@@ -99,7 +136,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "ready"
+      status: "ready",
+      description: "Enhanced Q1 Otsuka audience with improved segmentation algorithms",
+      createdDate: "2024-02-25",
+      lastModified: "2024-03-10",
+      owner: "John Smith",
+      tags: ["q1", "otsuka", "enhanced", "new"]
     },
     {
       id: 406964,
@@ -107,7 +149,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "ready"
+      status: "ready",
+      description: "Custom audience built specifically for Melissa Harrison's campaign requirements",
+      createdDate: "2024-03-05",
+      lastModified: "2024-03-18",
+      owner: "Melissa Harrison",
+      tags: ["custom", "personalized", "campaign"]
     },
     {
       id: 375563,
@@ -115,7 +162,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "ready"
+      status: "ready",
+      description: "Household income based audience for 2025-2026 fiscal year planning",
+      createdDate: "2024-02-15",
+      lastModified: "2024-03-05",
+      owner: "Robert Taylor",
+      tags: ["income", "household", "financial", "fiscal"]
     },
     {
       id: 421996,
@@ -123,7 +175,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 24,
-      status: "ready"
+      status: "ready",
+      description: "Test audience for validation purposes",
+      createdDate: "2024-03-12",
+      lastModified: "2024-03-12",
+      owner: "Test User",
+      tags: ["test", "validation"]
     },
     {
       id: 421997,
@@ -131,7 +188,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 25,
-      status: "processing"
+      status: "processing",
+      description: "Test audience currently being processed",
+      createdDate: "2024-03-10",
+      lastModified: "2024-03-10",
+      owner: "Test User",
+      tags: ["test", "processing"]
     },
     {
       id: 421998,
@@ -139,7 +201,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "failed"
+      status: "failed",
+      description: "Test audience that failed processing due to data validation errors",
+      createdDate: "2024-03-08",
+      lastModified: "2024-03-08",
+      owner: "Test User",
+      tags: ["test", "failed", "error"]
     },
     {
       id: 421999,
@@ -147,7 +214,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 23,
-      status: "draft"
+      status: "draft",
+      description: "Test audience in draft state awaiting finalization",
+      createdDate: "2024-03-07",
+      lastModified: "2024-03-07",
+      owner: "Test User",
+      tags: ["test", "draft", "pending"]
     },
     {
       id: 422000,
@@ -155,7 +227,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 24,
-      status: "ready"
+      status: "ready",
+      description: "Additional test audience for load testing",
+      createdDate: "2024-03-06",
+      lastModified: "2024-03-06",
+      owner: "Test User",
+      tags: ["test", "load-testing"]
     },
     {
       id: 422001,
@@ -163,7 +240,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 25,
-      status: "processing"
+      status: "processing",
+      description: "Test audience for processing pipeline validation",
+      createdDate: "2024-03-05",
+      lastModified: "2024-03-05",
+      owner: "Test User",
+      tags: ["test", "pipeline"]
     },
     {
       id: 422002,
@@ -171,7 +253,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "ready"
+      status: "ready",
+      description: "Test audience for performance benchmarking",
+      createdDate: "2024-03-04",
+      lastModified: "2024-03-04",
+      owner: "Test User",
+      tags: ["test", "performance"]
     },
     {
       id: 422003,
@@ -179,7 +266,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 23,
-      status: "ready"
+      status: "ready",
+      description: "Test audience for integration testing",
+      createdDate: "2024-03-03",
+      lastModified: "2024-03-03",
+      owner: "Test User",
+      tags: ["test", "integration"]
     },
     {
       id: 422004,
@@ -187,7 +279,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 24,
-      status: "draft"
+      status: "draft",
+      description: "Test audience for draft workflow testing",
+      createdDate: "2024-03-02",
+      lastModified: "2024-03-02",
+      owner: "Test User",
+      tags: ["test", "draft", "workflow"]
     },
     {
       id: 422005,
@@ -195,7 +292,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 25,
-      status: "ready"
+      status: "ready",
+      description: "Test audience for scalability testing",
+      createdDate: "2024-03-01",
+      lastModified: "2024-03-01",
+      owner: "Test User",
+      tags: ["test", "scalability"]
     },
     {
       id: 422006,
@@ -203,7 +305,12 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       audienceType: "COMPOSITE",
       level: "HOUSEHOLD",
       currencyOfRecord: 26,
-      status: "failed"
+      status: "failed",
+      description: "Test audience that failed due to data format issues",
+      createdDate: "2024-02-28",
+      lastModified: "2024-02-28",
+      owner: "Test User",
+      tags: ["test", "failed", "format"]
     }
   ];
 
@@ -244,9 +351,14 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
   
   }, [appliedSearchTerm, appliedCurrencyFilter, appliedStatusFilter, audiences]);
 
-  const handleView = (id) => {
-    navigate(`/view-audience?id=${id}`);
-    setDropdownOpen(null);
+  const handleView = (audience) => {
+    setSelectedAudience(audience);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedAudience(null);
   };
 
   const handleClearFilters = () => {
@@ -262,21 +374,6 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
   const handleDemographicAudiences = () => {
     navigate('/demographic-audiences');
   };
-
-  const toggleDropdown = (id) => {
-    setDropdownOpen(dropdownOpen === id ? null : id);
-  };
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = () => {
-      setDropdownOpen(null);
-    };
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
 
   // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -301,7 +398,7 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
 
   return (
     <div 
-      className="min-h-screen relative overflow-hidden"
+      className="min-h-screen relative overflow-x-hidden"
       style={{ 
         backgroundImage: `url(${bg})`,
         backgroundSize: 'cover',
@@ -315,7 +412,7 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
       {/* Content with relative positioning to appear above overlay */}
       <div className="relative z-10">
         {/* Fixed Header */}
-        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 backdrop-blur-md z-40 h-20">
+        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-md z-40 h-16 sm:h-20">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -332,7 +429,7 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { state: { isExpanded: true } })}
             />
           </div>
 
@@ -353,23 +450,23 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "ml-80" : "ml-0"
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
+            sidebarOpen ? "lg:ml-80" : "ml-0"
           }`}
         >
           <main
             className="px-4 py-3"
           >
             {/* Main content container */}
-            <div className="max-w-6xl mx-auto bg-white rounded-xl p-4 md:p-5 shadow-lg">
+            <div className="w-full max-w-7xl mx-auto bg-white rounded-xl p-4 sm:p-5 shadow-lg">
               {/* Page Header - Blue */}
-              <div className="bg-blue-600 rounded-lg p-3 mb-5 flex items-center justify-between">
+              <div className="bg-dark-blue rounded-lg p-3 mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <h2 className="text-white text-lg md:text-xl font-semibold">Audiences</h2>
                 </div>
                 <button 
                   onClick={handleDemographicAudiences}
-                  className="bg-white text-blue-600 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium hover:bg-gray-100 transition-colors whitespace-nowrap"
+                  className="bg-lemon/90 text-dark-blue px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium hover:bg-lemon transition-colors whitespace-nowrap"
                 >
                   VideoAmp Demographic Audiences
                 </button>
@@ -386,7 +483,7 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
                       type="text"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full px-2 py-1.5 text-sm border border-dark-blue/20 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
+                      className="w-full px-2 py-1.5 text-sm border border-dark-blue/20 rounded focus:outline-none focus:ring-1 focus:ring-dark-blue bg-white"
                       placeholder=""
                     />
                     <Search className="absolute right-2 top-1.5 text-gray-400" size={16} />
@@ -401,7 +498,7 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
                     type="text"
                     value={currencyFilter}
                     onChange={(e) => setCurrencyFilter(e.target.value)}
-                    className="w-full px-2 py-1.5 text-sm border border-dark-blue/20 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
+                    className="w-full px-2 py-1.5 text-sm border border-dark-blue/20 rounded focus:outline-none focus:ring-1 focus:ring-dark-blue bg-white"
                     placeholder=""
                   />
                 </div>
@@ -413,7 +510,7 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="w-full px-2 py-1.5 text-sm border border-dark-blue/20 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"
+                    className="w-full px-2 py-1.5 text-sm border border-dark-blue/20 rounded focus:outline-none focus:ring-1 focus:ring-dark-blue bg-white"
                   >
                     <option value="">All</option>
                     <option value="ready">Ready</option>
@@ -425,21 +522,21 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
               </div>
 
               {/* Apply/Clear Buttons */}
-              <div className="flex justify-end gap-2 mb-4">
+              <div className="flex flex-col sm:flex-row sm:justify-end gap-2 mb-4">
                 <button 
                   onClick={() => {
                     setAppliedSearchTerm(searchTerm);
                     setAppliedCurrencyFilter(currencyFilter);
                     setAppliedStatusFilter(statusFilter);
                   }}
-                  className="bg-blue-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-blue-700 transition-colors inline-flex items-center gap-1"
+                  className="w-full sm:w-auto bg-dark-blue/80 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-dark-blue transition-colors inline-flex items-center gap-1"
                 >
                   <Filter size={14} />
                   Apply
                 </button>
                 <button 
                   onClick={handleClearFilters}
-                  className="border border-gray-300 text-gray-700 px-3 py-1.5 rounded-full text-xs font-medium hover:bg-gray-50 transition-colors inline-flex items-center gap-1"
+                  className="w-full sm:w-auto border border-gray-300 text-gray-700 px-3 py-1.5 rounded-full text-xs font-medium hover:bg-gray-50 transition-colors inline-flex items-center gap-1"
                 >
                   <X size={14} />
                   Clear
@@ -448,23 +545,23 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
 
               {/* Loading Overlay */}
               {loading && (
-                <div className="fixed inset-0 bg-white/30 flex items-center justify-center z-50">
-                  <div className="w-12 h-12 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                <div className="fixed inset-0 bg-white/40 backdrop-blur-sm flex items-center justify-center z-50">
+                  <div className="w-12 h-12 border-3 border-blue-200 border-t-dark-blue rounded-full animate-spin"></div>
                 </div>
               )}
 
-              {/* Table - with full width and proper column distribution */}
-              <div className="bg-white rounded-lg border border-gray-200">
-              <table className="w-full table-fixed divide-y divide-gray-200">
-                  <thead className="bg-blue-600 ">
+              {/* Table */}
+              <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto">
+              <table className="min-w-[800px] w-full table-fixed divide-y divide-gray-200">
+                  <thead className="bg-dark-blue">
                     <tr>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px] ">ID</th>
+                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px]">ID</th>
                       <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[250px]">Name</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[80px] ">Type</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px] ">Level</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px] ">Currency</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px] ">Status</th>
-                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[50px] "></th>
+                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[80px]">Type</th>
+                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px]">Level</th>
+                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[50px]">Currency</th>
+                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[50px]">Status</th>
+                      <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[30px]"></th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -478,7 +575,7 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
                       currentItems.map((audience) => (
                         <tr key={audience.id} className="hover:bg-gray-50">
                           <td className="px-3 py-2 text-xs text-gray-900 break-all whitespace-normal align-top">{audience.id}</td>
-                          <td className="px-3 py-2 text-xs text-gray-900 break-all break-words whitespace-normal">{audience.name}</td>
+                          <td className="px-3 py-2 text-xs text-gray-900 font-medium break-words whitespace-normal">{audience.name}</td>
                           <td className="px-3 py-2 text-xs text-gray-900 break-all whitespace-normal align-top">{audience.audienceType}</td>
                           <td className="px-3 py-2 text-xs text-gray-900 break-all whitespace-normal align-top">{audience.level}</td>
                           <td className="px-3 py-2 text-xs text-gray-900 break-all whitespace-normal align-top">{audience.currencyOfRecord}</td>
@@ -487,29 +584,16 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
                               {audience.status}
                             </span>
                           </td>
-                          <td className="px-3 py-2 align-top relative">
-                            <button 
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleDropdown(audience.id);
-                              }}
-                              className="text-gray-600 hover:text-gray-900"
+                          <td className="px-3 py-2 align-top">
+                          <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.95 }}
+                              onClick={() => handleView(audience)}
+                              className="text-blue-600 hover:text-blue-800"
+                              title="View Details"
                             >
-                              <MoreVertical size={16} />
-                            </button>
-                            
-                            {/* Dropdown menu */}
-                            {dropdownOpen === audience.id && (
-                              <div className="absolute right-0 mt-1 w-28 bg-white rounded-md shadow-lg border border-gray-200 z-10">
-                                <button
-                                  onClick={() => handleView(audience.id)}
-                                  className="w-full text-left px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 flex items-center gap-1"
-                                >
-                                  <Eye size={12} />
-                                  View
-                                </button>
-                              </div>
-                            )}
+                              <Eye size={16} />
+                              </motion.button>
                           </td>
                         </tr>
                       ))
@@ -520,7 +604,7 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
 
               {/* Pagination */}
               {!loading && filteredAudiences.length > 0 && (
-                <div className="flex items-center justify-between mt-3 text-xs text-gray-700">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-3 text-xs text-gray-700">
                   <div>
                     Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredAudiences.length)} of {filteredAudiences.length}
                   </div>
@@ -554,6 +638,141 @@ const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
           </main>
         </div>
       </div>
+
+      {/* Modal for viewing audience details */}
+      {isModalOpen && selectedAudience && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            {/* Background overlay */}
+            <div 
+              className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+              onClick={closeModal}
+            ></div>
+
+            {/* Modal panel */}
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full max-w-lg sm:max-w-2xl">
+              <div className="bg-dark-blue px-4 py-3 flex justify-between items-center">
+                <h3 className="text-lg font-medium text-white">
+                  Audience Details - {selectedAudience.id}
+                </h3>
+                <button
+                  onClick={closeModal}
+                  className="text-white hover:text-gray-200"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Left Column */}
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Audience ID</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedAudience.id}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Audience Name</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200 break-words">
+                        {selectedAudience.name}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Description</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedAudience.description || 'No description available'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Audience Type</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedAudience.audienceType}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Level</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedAudience.level}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Right Column */}
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Currency of Record</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedAudience.currencyOfRecord}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Status</label>
+                      <div className="text-sm">
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full inline-block ${getStatusBadgeClass(selectedAudience.status)}`}>
+                          {selectedAudience.status}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Created Date</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedAudience.createdDate || 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Last Modified</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedAudience.lastModified || 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Owner</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedAudience.owner || 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Tags</label>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedAudience.tags && selectedAudience.tags.length > 0 ? (
+                          selectedAudience.tags.map((tag, index) => (
+                            <span key={index} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">
+                              {tag}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-sm text-gray-500">No tags</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

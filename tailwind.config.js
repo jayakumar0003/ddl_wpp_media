@@ -4,11 +4,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Montserrat"', 'sans-serif'], // Global default
+        wpp: ["WPP", "sans-serif"],
       },
       colors: {
         lemon: '#B9FD56',
-        'dark-blue': '#0a1f44',
+        'dark-blue': '#000050',
       },
     },
   },

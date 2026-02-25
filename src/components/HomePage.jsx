@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
@@ -14,6 +14,7 @@ import {
   Database,
   FileCheck,
 } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 const menuItems = [
   { name: "Create Plan", icon: FileText, path: "/create-plan" },
@@ -27,23 +28,35 @@ const menuItems = [
 ];
 
 const HomePage = () => {
+  const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.isExpanded) {
+      setIsExpanded(true);
+
+      // Clear navigation state after using it
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
   const navigate = useNavigate();
 
-  const handleGoClick = () => setIsExpanded(true);
+  const handleGoClick = () => {
+    setIsExpanded(true);
+  };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full min-h-screen overflow-hidden">
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
-      
+
       {/* Animated blobs (unchanged) */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute w-[700px] h-[700px] rounded-full bg-blue-700/30 blur-[110px]"
+          className="absolute w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] lg:w-[700px] lg:h-[700px] rounded-full bg-blue-700/30 blur-[100px]"
           animate={{
             x: [0, -250, 180, 0],
             y: [0, 200, -140, 0],
@@ -54,7 +67,7 @@ const HomePage = () => {
           style={{ top: "-15%", left: "-10%" }}
         />
         <motion.div
-          className="absolute w-[700px] h-[700px] rounded-full bg-lemon/30 blur-[200px]"
+          className="absolute w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] lg:w-[700px] lg:h-[700px] rounded-full bg-lemon/30 blur-[100px]"
           animate={{
             x: [0, 200, -150, 0],
             y: [0, -180, 120, 0],
@@ -65,7 +78,7 @@ const HomePage = () => {
           style={{ bottom: "-20%", right: "-10%" }}
         />
         <motion.div
-          className="absolute w-[400px] h-[400px] rounded-full bg-lemon/30 blur-[80px]"
+          className="absolute w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] lg:w-[700px] lg:h-[700px] rounded-full bg-lemon/30 blur-[200px]"
           animate={{
             x: [0, 150, -80, 0],
             y: [0, -120, 70, 0],
@@ -75,7 +88,7 @@ const HomePage = () => {
           style={{ top: "30%", right: "15%" }}
         />
         {/* <motion.div
-          className="absolute w-[500px] h-[500px] rounded-full bg-cyan-400/20 blur-[90px]"
+          className="absolute w-[500px] h-[500px] rounded-full bg-cyan-400/20 blur-[180px]"
           animate={{
             x: [0, -100, 120, 0],
             y: [0, 80, -100, 0],
@@ -85,7 +98,7 @@ const HomePage = () => {
           style={{ top: "60%", left: "10%" }}
         /> */}
         <motion.div
-          className="absolute w-[900px] h-[900px] border border-lemon/20 rounded-full"
+          className="absolute w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] lg:w-[900px] lg:h-[900px] border border-lemon/20 rounded-full"
           animate={{ rotate: 360 }}
           transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
           style={{ top: "-30%", left: "30%" }}
@@ -95,47 +108,24 @@ const HomePage = () => {
       {/* Header with logo */}
       <Header />
 
-      {/* Title row – appears below header when expanded */}
-      {/* <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-24 left-9 z-20" // Adjust top to sit under logo
-          >
-            <motion.div
-              layoutId="title"
-              className="text-dark-blue text-left flex gap-3"
-            >
-              <div className="text-3xl sm:text-3xl font-light tracking-wider font-display">
-                Welcome To
-              </div>
-              <div className="text-3xl sm:text-4xl font-black  leading-tight ">
-                DDl
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence> */}
-
       {/* Main content area */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 pt-6">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 pt-20 pb-10">
         {!isExpanded ? (
           /* Centered title + Go button */
           <>
             <motion.div layoutId="title" className="text-center mb-8 space-y-4">
-              <div className="text-dark-blue text-4xl sm:text-6xl font-normal tracking-wider ">
-                Welcome To <span className="font-bold ">DDL</span>
+              <div className="text-dark-blue text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-wide leading-tight">
+                Welcome To <span className="font-wpp font-extrabold">DDL</span>
               </div>
-              <p className="text-mg text-dark-blue/80 ">
-              An Integrated One-Stop Solution Enabling Data-Driven Linear Campaign Planning
+              <p className="text-sm sm:text-base md:text-lg text-dark-blue/80  mx-auto">
+                An Integrated One-Stop Solution Enabling Data-Driven Linear
+                Campaign Planning
               </p>
             </motion.div>
 
             <motion.button
               onClick={handleGoClick}
-              className="group flex items-center gap-3 px-8 py-3 bg-lemon text-dark-blue rounded-full text-xl font-bold shadow-[0_0_30px_rgba(185,253,86,0.4)] border border-lemon/40 backdrop-blur-md"
+              className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-2.5 sm:py-3 bg-lemon text-dark-blue rounded-full text-base sm:text-lg md:text-xl font-bold shadow-[0_0_30px_rgba(185,253,86,0.4)] border border-lemon/40 backdrop-blur-md"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               exit={{ opacity: 0, scale: 0.8 }}
@@ -153,7 +143,7 @@ const HomePage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="w-full max-w-7xl px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
           >
             {menuItems.map((item, index) => {
               const Icon = item.icon;
@@ -166,7 +156,7 @@ const HomePage = () => {
                               group
                               bg-dark-blue/10
                               backdrop-blur-md
-                              rounded-full
+                              rounded-2xl sm:rounded-full
                               p-2
                               shadow-2xl
                               border border-white/20
@@ -178,14 +168,14 @@ const HomePage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  <div className="flex items-center text-center gap-2">
-                    <div className="p-3 bg-lemon/30 rounded-full transition-all duration-300 group-hover:bg-lemon/60 group-hover:shadow-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 sm:p-3 bg-lemon/40 rounded-full transition-all duration-300 group-hover:bg-lemon/60 group-hover:shadow-lg">
                       <Icon
-                        size={28}
-                        className="text-dark-blue/70 group-hover:text-dark-blue group-hover:scale-110 transition-all duration-300"
+                        size={20}
+                        className="sm:w-6 sm:h-6 text-dark-blue/70 group-hover:text-dark-blue transition-all duration-300"
                       />
                     </div>
-                    <span className=" text-dark-blue font-semibold text-sm transition-all duration-300 group-hover:text-dark-blue">
+                    <span className=" text-dark-blue font-medium sm:font-semibold text-sm sm:text-[16px] transition-all duration-300 group-hover:text-dark-blue">
                       {item.name}
                     </span>
                   </div>

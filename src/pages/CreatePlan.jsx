@@ -4,7 +4,7 @@ import { Calculator, ChevronDown, Menu, ChevronUp } from "lucide-react";
 import Sidebar from "./Sidebar";
 import logo from "../assets/logo-wpp-media.png";
 import { useNavigate } from "react-router-dom";
-import bg from "../assets/background-gradient-lights.jpg"
+import bg from "../assets/background-gradient-lights.jpg";
 
 const CreatePlan = () => {
   const navigate = useNavigate();
@@ -75,24 +75,22 @@ const CreatePlan = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen relative overflow-hidden"
-      style={{ 
+    <div
+      className="min-h-screen relative overflow-x-hidden"
+      style={{
         backgroundImage: `url(${bg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
       }}
     >
       {/* Subtle overlay to soften the background - very light */}
-      <div className="absolute inset-0 bg-white/80 backdrop-blur-4xl"></div>
+      <div className="absolute inset-0  bg-white/80 backdrop-blur-4xl"></div>
 
-
-      
       {/* Content with relative positioning to appear above overlay */}
       <div className="relative z-10">
         {/* Fixed Header */}
-        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4  backdrop-blur-md z-40 h-20">
+        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-md z-40 h-16 sm:h-20">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -109,7 +107,7 @@ const CreatePlan = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { state: { isExpanded: true } })}
             />
           </div>
 
@@ -138,21 +136,20 @@ const CreatePlan = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "ml-80" : "ml-0"
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
+            sidebarOpen ? "lg:ml-80" : "ml-0"
           }`}
         >
           <main
-            className="px-6 py-3 overflow-y-auto"
+            className="px-4 sm:px-6 py-4 overflow-y-auto"
             style={{ maxHeight: "calc(100vh - 80px)" }}
           >
             {/* Semi-transparent content container */}
-            <div className="  p-2 md:p-3 ">
-              <h1 className="text-4xl font-display font-bold text-dark-blue mb-1">
+            <div className="p-2 md:p-3 ">
+              <h1 className="text-2xl  md:text-3xl font-bold text-dark-blue mb-1">
                 Create Plan
               </h1>
-              <p className="text-2xl text-dark-blue mb-2">Plan a Campaign</p>
-              
+              <p className="text-base sm:text-lg md:text-xl text-dark-blue mb-2">Plan a Campaign</p>
 
               {/* LEFT COLUMN: Datasets dropdown */}
               <div className="relative mb-4">
@@ -160,15 +157,15 @@ const CreatePlan = () => {
                   Datasets:
                 </h3>
 
-                <p className="text-sm text-dark-blue/60 mb-4">
-                Below are the available VideoAmp datasets. Please select which you
-                would like to include in this campaign planning
-              </p>
+                <p className="text-sm font-medium text-dark-blue/60 mb-4">
+                  Below are the available VideoAmp datasets. Please select which
+                  you would like to include in this campaign planning
+                </p>
 
                 {/* Dropdown Button */}
                 <button
                   onClick={() => setDatasetsOpen(!datasetsOpen)}
-                  className="w-64 flex items-center justify-between px-4 py-2 border border-dark-blue/20 rounded-lg bg-white/90 hover:bg-lemon/20 transition-colors backdrop-blur-sm"
+                  className="w-full sm:w-80 md:w-96 flex items-center justify-between px-4 py-2 border border-dark-blue/20 rounded-lg bg-white/90 hover:bg-lemon/20 transition-colors backdrop-blur-sm"
                 >
                   <span className="text-dark-blue font-medium">
                     {selectedDatasets.length > 0
@@ -184,7 +181,7 @@ const CreatePlan = () => {
 
                 {/* Dropdown Menu */}
                 {datasetsOpen && (
-                  <div className="absolute z-50 w-64 mt-1 bg-white/90 backdrop-blur-md border border-dark-blue/20 rounded-lg shadow-xl max-h-60 overflow-y-auto">
+                  <div className="absolute z-50 w-full sm:w-80 md:w-96 mt-1 bg-white/90 backdrop-blur-md border border-dark-blue/20 rounded-lg shadow-xl max-h-60 overflow-y-auto">
                     <div className="p-3 space-y-2">
                       {availableDatasets.map((ds) => (
                         <label
@@ -215,10 +212,10 @@ const CreatePlan = () => {
               </div>
 
               {/* Two‑column layout with 60% / 40% split */}
-              <div className="grid grid-cols-1 lg:grid-cols-[58%_41%] gap-3">
+              <div className="grid grid-cols-1 xl:grid-cols-[58%_41%] gap-6">
                 <div className="space-y-6">
                   {/* Budget Calculator */}
-                  <div className="border border-dark-blue/20 rounded-xl overflow-hidden bg-white/80 backdrop-blur-sm">
+                  <div className="border border-dark-blue/20 rounded-xl overflow-hidden w-full bg-white/80 backdrop-blur-sm">
                     <div className="bg-gradient-to-r from-lemon/30 to-blue-400/30 p-4 flex justify-between items-center">
                       <h3 className="text-xl font-bold text-dark-blue flex items-center gap-2">
                         <Calculator size={22} />
@@ -402,11 +399,11 @@ const CreatePlan = () => {
                   </div>
                   <div className="p-3">
                     <p className="text-sm text-dark-blue/60">
-                      Specify the percentage breakdown of spot lengths. Must total
-                      100%.
+                      Specify the percentage breakdown of spot lengths. Must
+                      total 100%.
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 p-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
                     {Object.entries(spots).map(([key, value]) => (
                       <div key={key}>
                         <label className="block text-xs font-medium text-dark-blue mb-1">
@@ -417,7 +414,9 @@ const CreatePlan = () => {
                           min="0"
                           max="100"
                           value={value}
-                          onChange={(e) => handleSpotChange(key, e.target.value)}
+                          onChange={(e) =>
+                            handleSpotChange(key, e.target.value)
+                          }
                           className="w-full px-3 py-2 border border-dark-blue/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-lemon bg-white/60 backdrop-blur-sm"
                         />
                       </div>
@@ -473,7 +472,7 @@ const CreatePlan = () => {
               </div>
 
               {/* Targeting Options in a row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mt-8">
                 {/* Hispanic */}
                 <div className="p-4 border border-dark-blue/10 rounded-lg bg-white/80 backdrop-blur-sm">
                   <h4 className="font-bold text-dark-blue mb-2">
@@ -523,7 +522,8 @@ const CreatePlan = () => {
                       htmlFor="broadcast"
                       className="text-sm text-dark-blue cursor-pointer"
                     >
-                      Require broadcast networks (most efficient will be selected)
+                      Require broadcast networks (most efficient will be
+                      selected)
                     </label>
                   </div>
                   <p className="text-xs text-dark-blue/40 mt-2">
@@ -556,7 +556,8 @@ const CreatePlan = () => {
                     </label>
                   </div>
                   <p className="text-xs text-dark-blue/40 mt-2">
-                    Default: OFF (Cable news networks included only if efficient)
+                    Default: OFF (Cable news networks included only if
+                    efficient)
                   </p>
                 </div>
               </div>
@@ -621,7 +622,7 @@ const CreatePlan = () => {
                   value={loadSession}
                   onChange={(e) => setLoadSession(e.target.value)}
                   placeholder="optional"
-                  className="w-full max-w-md px-3 py-2 border border-dark-blue/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-lemon bg-white/80 backdrop-blur-sm"
+                  className="w-full sm:max-w-md px-3 py-2 border border-dark-blue/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-lemon bg-white/80 backdrop-blur-sm"
                 />
               </div>
 
@@ -630,7 +631,7 @@ const CreatePlan = () => {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="px-8 py-3 bg-lemon text-dark-blue rounded-full text-lg font-bold shadow-lg hover:shadow-xl transition-all border-2 border-dark-blue/20"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-lemon text-dark-blue rounded-full text-base sm:text-lg font-bold shadow-lg hover:shadow-xl transition-all border-2 border-dark-blue/20"
                   onClick={() => alert("Form submitted (UI only)")}
                 >
                   Submit

@@ -2,9 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    body {
-      @apply font-sans;
-    }
+
+/* ===============================
+   WPP Font Family
+================================= */
+
+@font-face {
+  font-family: "WPP";
+  src: url("./assets/WPP-Fonts/Webfonts/WPP-Thin.woff2") format("woff2"),
+       url("./assets/WPP-Fonts/Webfonts/WPP-Thin.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WPP";
+  src: url("./assets/WPP-Fonts/Webfonts/WPP-Light.woff2") format("woff2"),
+       url("./assets/WPP-Fonts/Webfonts/WPP-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WPP";
+  src: url("./assets/WPP-Fonts/Webfonts/WPP-Regular.woff2") format("woff2"),
+       url("./assets/WPP-Fonts/Webfonts/WPP-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WPP";
+  src: url("./assets/WPP-Fonts/Webfonts/WPP-Medium.woff2") format("woff2"),
+       url("./assets/WPP-Fonts/Webfonts/WPP-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WPP";
+  src: url("./assets/WPP-Fonts/Webfonts/WPP-Bold.woff2") format("woff2"),
+       url("./assets/WPP-Fonts/Webfonts/WPP-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "WPP";
+  src: url("./assets/WPP-Fonts/Webfonts/WPP-Black.woff2") format("woff2"),
+       url("./assets/WPP-Fonts/Webfonts/WPP-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+  body {
+    @apply font-wpp;
   }
-  
+

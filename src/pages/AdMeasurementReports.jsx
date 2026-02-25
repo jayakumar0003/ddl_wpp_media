@@ -14,7 +14,6 @@ import {
   Search,
   X,
   Filter,
-  MoreVertical,
 } from "lucide-react";
 import Sidebar from "./Sidebar";
 import logo from "../assets/logo-wpp-media.png";
@@ -27,7 +26,8 @@ const AdMeasurementReports = () => {
   const [loading, setLoading] = useState(true);
   const [reports, setReports] = useState([]);
   const [filteredReports, setFilteredReports] = useState([]);
-  const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [selectedReport, setSelectedReport] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -56,7 +56,7 @@ const AdMeasurementReports = () => {
   const [datasourceGroupOptions, setDatasourceGroupOptions] = useState([]);
   const [loadingOptions, setLoadingOptions] = useState(false);
 
-  // Temporary data for reports
+  // Enhanced temporary data for reports with additional fields
   const tempReports = [
     {
       id: "rep-001",
@@ -67,6 +67,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-01-15 10:30 AM",
       status: "succeeded",
       latest_request: { status: "succeeded" },
+      description: "Q1 2025 audience essentials report covering key demographics and reach metrics",
+      advertiser: "Global Brands Inc.",
+      agency: "WPP Media",
+      audiences: ["Adults 18-49", "Adults 25-54"],
+      datasource_groups: ["Q1 2025 Campaign Data"],
+      tags: ["q1", "2025", "essentials", "audience"]
     },
     {
       id: "rep-002",
@@ -77,6 +83,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-02-20 02:15 PM",
       status: "processing",
       latest_request: { status: "processing" },
+      description: "Summer campaign reach and frequency analysis for seasonal promotions",
+      advertiser: "Summer Brands Co.",
+      agency: "WPP Media",
+      audiences: ["Adults 18-34", "Adults 25-54"],
+      datasource_groups: ["Summer Promotions"],
+      tags: ["summer", "rf", "reach-frequency"]
     },
     {
       id: "rep-003",
@@ -87,6 +99,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-02-10 09:45 AM",
       status: "succeeded",
       latest_request: { status: "succeeded" },
+      description: "Network daypart performance analysis for spring campaigns",
+      advertiser: "Media Networks Inc.",
+      agency: "WPP Media",
+      audiences: ["Adults 25-54", "Adults 35-64"],
+      datasource_groups: ["Spring Launch Campaign"],
+      tags: ["network", "daypart", "spring"]
     },
     {
       id: "rep-004",
@@ -97,6 +115,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-03-05 11:20 AM",
       status: "failed",
       latest_request: { status: "failed" },
+      description: "Holiday season audience essentials report - data processing failed",
+      advertiser: "Holiday Retail Group",
+      agency: "WPP Media",
+      audiences: ["All Adults", "Holiday Shoppers"],
+      datasource_groups: ["Holiday Season 2025"],
+      tags: ["holiday", "essentials", "failed"]
     },
     {
       id: "rep-005",
@@ -107,6 +131,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-04-18 03:30 PM",
       status: "succeeded",
       latest_request: { status: "succeeded" },
+      description: "Black Friday weekend reach and frequency analysis",
+      advertiser: "Retail Giant",
+      agency: "WPP Media",
+      audiences: ["Deal Seekers", "Online Shoppers"],
+      datasource_groups: ["Black Friday Weekend"],
+      tags: ["black-friday", "rf", "weekend"]
     },
     {
       id: "rep-006",
@@ -117,6 +147,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-02-22 10:00 AM",
       status: "succeeded",
       latest_request: { status: "succeeded" },
+      description: "Spring product launch daypart performance analysis",
+      advertiser: "Innovation Labs",
+      agency: "WPP Media",
+      audiences: ["Early Adopters", "Tech Enthusiasts"],
+      datasource_groups: ["Spring Launch Campaign"],
+      tags: ["spring", "launch", "daypart"]
     },
     {
       id: "rep-007",
@@ -127,6 +163,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-05-14 01:45 PM",
       status: "pending",
       latest_request: { status: "pending" },
+      description: "Back to school audience essentials report - pending processing",
+      advertiser: "Education Supplies Inc.",
+      agency: "WPP Media",
+      audiences: ["Parents", "Students", "Teachers"],
+      datasource_groups: ["Back to School Data"],
+      tags: ["back-to-school", "essentials", "pending"]
     },
     {
       id: "rep-008",
@@ -137,6 +179,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-06-01 11:15 AM",
       status: "processing",
       latest_request: { status: "processing" },
+      description: "New Year resolution campaign reach and frequency analysis",
+      advertiser: "Wellness Brands",
+      agency: "WPP Media",
+      audiences: ["Fitness Enthusiasts", "Health Conscious"],
+      datasource_groups: ["New Year Resolution"],
+      tags: ["new-year", "rf", "fitness"]
     },
     {
       id: "rep-009",
@@ -147,6 +195,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-02-05 02:30 PM",
       status: "succeeded",
       latest_request: { status: "succeeded" },
+      description: "Canadian market daypart performance analysis",
+      advertiser: "Canada Brands",
+      agency: "WPP Media Canada",
+      audiences: ["Canadian Adults", "French Canadians"],
+      datasource_groups: ["Canadian Market Data"],
+      tags: ["canada", "daypart", "international"]
     },
     {
       id: "rep-010",
@@ -157,6 +211,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-01-12 09:00 AM",
       status: "succeeded",
       latest_request: { status: "succeeded" },
+      description: "Spring season audience essentials report",
+      advertiser: "Spring Brands",
+      agency: "WPP Media",
+      audiences: ["Adults 18-49", "Adults 25-54"],
+      datasource_groups: ["Spring Launch Campaign"],
+      tags: ["spring", "essentials", "seasonal"]
     },
     {
       id: "rep-011",
@@ -167,6 +227,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-04-03 04:20 PM",
       status: "pending",
       latest_request: { status: "pending" },
+      description: "Fall fashion collection reach and frequency analysis",
+      advertiser: "Fashion Outlet",
+      agency: "WPP Media",
+      audiences: ["Fashion Shoppers", "Trend Setters"],
+      datasource_groups: ["Fall Collection Data"],
+      tags: ["fall", "rf", "fashion"]
     },
     {
       id: "rep-012",
@@ -177,6 +243,12 @@ const AdMeasurementReports = () => {
       created_at: "2025-05-18 10:45 AM",
       status: "succeeded",
       latest_request: { status: "succeeded" },
+      description: "Christmas holiday daypart performance analysis",
+      advertiser: "Gift Guide Ltd.",
+      agency: "WPP Media UK",
+      audiences: ["Holiday Shoppers", "Gift Buyers"],
+      datasource_groups: ["Christmas Gift Guide"],
+      tags: ["christmas", "daypart", "holiday", "uk"]
     },
   ];
 
@@ -239,9 +311,14 @@ const AdMeasurementReports = () => {
     setCurrentPage(1);
   }, [reportIdFilter, requestTypeFilter, reports]);
 
-  const handleView = (id) => {
-    navigate(`/view-report?id=${id}`);
-    setDropdownOpen(null);
+  const handleView = (report) => {
+    setSelectedReport(report);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedReport(null);
   };
 
   const handleClone = (id) => {
@@ -261,7 +338,6 @@ const AdMeasurementReports = () => {
       setEditId(null);
       setShowCreateModal(true);
     }
-    setDropdownOpen(null);
   };
 
   const handleDownload = (id) => {
@@ -271,7 +347,6 @@ const AdMeasurementReports = () => {
       alert(`Downloading report ${id} (Demo mode)`);
       setLoadingOverlay(false);
     }, 500);
-    setDropdownOpen(null);
   };
 
   const handleRefresh = (id) => {
@@ -281,7 +356,6 @@ const AdMeasurementReports = () => {
       alert(`Refreshing report ${id} (Demo mode)`);
       setLoadingOverlay(false);
     }, 500);
-    setDropdownOpen(null);
   };
 
   const handleDelete = (id) => {
@@ -295,7 +369,6 @@ const AdMeasurementReports = () => {
         alert("Report deleted successfully.");
       }, 500);
     }
-    setDropdownOpen(null);
   };
 
   const handleCreateReport = () => {
@@ -416,21 +489,6 @@ const AdMeasurementReports = () => {
     }, 500);
   };
 
-  const toggleDropdown = (id) => {
-    setDropdownOpen(dropdownOpen === id ? null : id);
-  };
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = () => {
-      setDropdownOpen(null);
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
   // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -472,7 +530,7 @@ const AdMeasurementReports = () => {
 
   return (
     <div
-      className="min-h-screen relative overflow-hidden"
+      className="min-h-screen relative overflow-x-hidden"
       style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
@@ -490,10 +548,10 @@ const AdMeasurementReports = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20 flex items-center justify-center z-[60]"
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[60]"
           >
             <div className="bg-white rounded-lg p-4 shadow-xl flex items-center gap-3">
-              <div className="w-6 h-6 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+              <div className="w-6 h-6 border-3 border-blue-200 border-t-dark-blue rounded-full animate-spin"></div>
               <span className="text-sm text-gray-700">Loading...</span>
             </div>
           </motion.div>
@@ -503,7 +561,7 @@ const AdMeasurementReports = () => {
       {/* Content with relative positioning to appear above overlay */}
       <div className="relative z-10">
         {/* Fixed Header */}
-        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 backdrop-blur-md z-40 h-20">
+        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-md z-40 h-16 sm:h-20">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -520,7 +578,7 @@ const AdMeasurementReports = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { state: { isExpanded: true } })}
             />
           </div>
 
@@ -541,34 +599,32 @@ const AdMeasurementReports = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "ml-80" : "ml-0"
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
+            sidebarOpen ? "lg:ml-80" : "ml-0"
           }`}
         >
           <main className="px-4 py-3">
             {/* Main content container */}
-            <div className="max-w-6xl mx-auto bg-white rounded-xl p-4 md:p-5 shadow-lg">
-              {/* Page Header - Blue */}
-              <div className="bg-blue-600 rounded-lg p-3 mb-5 flex items-center justify-between">
+            <div className="w-full max-w-7xl mx-auto bg-white rounded-xl p-4 sm:p-5 shadow-lg">
+              {/* Page Header - Dark Blue */}
+              <div className="bg-dark-blue rounded-lg p-3 mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  
                   <h2 className="text-white text-lg md:text-xl font-semibold">
                     Ad Measurement Reports
                   </h2>
                 </div>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={handleCreateReport}
-                  className="bg-white text-blue-600 px-3 py-1.5 rounded-full text-xs md:text-sm font-medium hover:bg-gray-100 transition-colors inline-flex items-center gap-1"
+                  className="bg-lemon/90 text-dark-blue px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium hover:bg-lemon transition-colors whitespace-nowrap inline-flex items-center gap-1"
                 >
                   <Plus size={14} />
                   Create Report
-                </motion.button>
+                </button>
               </div>
 
+              {/* Filter Row */}
               <div className="flex flex-wrap gap-4 mb-4 items-end">
-                <div className="w-64">
+                <div className="w-full sm:w-64">
                   <label className="block text-xs font-medium text-dark-blue mb-1">
                     Search By Report ID
                   </label>
@@ -576,7 +632,7 @@ const AdMeasurementReports = () => {
                     type="text"
                     value={reportIdFilter}
                     onChange={(e) => setReportIdFilter(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-dark-blue/20 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     placeholder="Enter report ID"
                   />
                 </div>
@@ -588,7 +644,7 @@ const AdMeasurementReports = () => {
                   <select
                     value={requestTypeFilter}
                     onChange={(e) => setRequestTypeFilter(e.target.value)}
-                    className="w-full px-2 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-2 py-2 text-sm border border-dark-blue/20 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                   >
                     <option value="">All</option>
                     <option value="ESSENTIALS">
@@ -606,52 +662,41 @@ const AdMeasurementReports = () => {
 
               {/* Loading State */}
               {loading && (
-                <div className="flex items-center justify-center py-12">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="w-10 h-10 border-3 border-blue-200 border-t-blue-600 rounded-full"
-                  />
+                <div className="fixed inset-0 bg-white/30 flex items-center justify-center z-50">
+                  <div className="w-12 h-12 border-3 border-blue-200 border-t-dark-blue rounded-full animate-spin"></div>
                 </div>
               )}
 
               {/* Table */}
               {!loading && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-                >
-                  <table className="w-full table-fixed divide-y divide-gray-200">
-                    <thead className="bg-blue-600">
+                <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto">
+                  <table className="min-w-[1200px] w-full table-fixed divide-y divide-gray-200">
+                    <thead className="bg-dark-blue">
                       <tr>
                         <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px]">
                           ID
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[150px]">
+                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[120px]">
                           Name
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[150px]">
+                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[120px]">
                           Request Type
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[80px]">
+                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[60px]">
                           Start Date
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[80px]">
+                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[60px]">
                           End Date
                         </th>
                         <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[80px]">
                           Created On
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px]">
+                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[60px]">
                           Status
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[50px]"></th>
+                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[100px]">
+                          Actions
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -665,12 +710,9 @@ const AdMeasurementReports = () => {
                           </td>
                         </tr>
                       ) : (
-                        currentItems.map((report, index) => (
-                          <motion.tr
+                        currentItems.map((report) => (
+                          <tr
                             key={report.id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.05 }}
                             className="hover:bg-gray-50"
                           >
                             <td className="px-3 py-2 text-xs text-gray-900 break-all whitespace-normal align-top">
@@ -718,81 +760,61 @@ const AdMeasurementReports = () => {
                                 {report.status}
                               </span>
                             </td>
-                            <td className="px-3 py-2 align-top relative">
-                              <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleDropdown(report.id);
-                                }}
-                                className="text-gray-600 hover:text-gray-900"
-                              >
-                                <MoreVertical size={14} />
-                              </motion.button>
-
-                              {/* Dropdown menu */}
-                              {dropdownOpen === report.id && (
-                                <motion.div
-                                  initial={{ opacity: 0, scale: 0.95 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  className="absolute right-0 mt-1 w-40 bg-white rounded-md shadow-lg border border-gray-200 z-10"
+                            <td className="px-3 py-2 align-top">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <button
+                                  onClick={() => handleView(report)}
+                                  className="text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-50"
+                                  title="View"
                                 >
-                                  <button
-                                    onClick={() => handleView(report.id)}
-                                    className="w-full text-left px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                                  >
-                                    <Eye size={12} />
-                                    View
-                                  </button>
-                                  <button
-                                    onClick={() => handleClone(report.id)}
-                                    className="w-full text-left px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                                  >
-                                    <Files size={12} />
-                                    Clone
-                                  </button>
-                                  <button
-                                    onClick={() => handleDownload(report.id)}
-                                    disabled={report.status !== "succeeded"}
-                                    className={`w-full text-left px-3 py-1.5 text-xs flex items-center gap-2 ${
-                                      report.status === "succeeded"
-                                        ? "text-gray-700 hover:bg-gray-100"
-                                        : "text-gray-400 cursor-not-allowed"
-                                    }`}
-                                  >
-                                    <Download size={12} />
-                                    Download
-                                  </button>
-                                  <button
-                                    onClick={() => handleRefresh(report.id)}
-                                    className="w-full text-left px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                                  >
-                                    <RefreshCw size={12} />
-                                    Refresh
-                                  </button>
-                                  <div className="border-t border-gray-200 my-1"></div>
-                                  <button
-                                    onClick={() => handleDelete(report.id)}
-                                    className="w-full text-left px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2"
-                                  >
-                                    <Trash2 size={12} />
-                                    Delete
-                                  </button>
-                                </motion.div>
-                              )}
+                                  <Eye size={16} />
+                                </button>
+                                <button
+                                  onClick={() => handleClone(report.id)}
+                                  className="text-green-600 hover:text-green-800 p-1 rounded hover:bg-green-50"
+                                  title="Clone"
+                                >
+                                  <Files size={16} />
+                                </button>
+                                <button
+                                  onClick={() => handleDownload(report.id)}
+                                  disabled={report.status !== "succeeded"}
+                                  className={`p-1 rounded ${
+                                    report.status === "succeeded"
+                                      ? "text-purple-600 hover:text-purple-800 hover:bg-purple-50"
+                                      : "text-gray-400 cursor-not-allowed"
+                                  }`}
+                                  title={report.status === "succeeded" ? "Download" : "Download not available"}
+                                >
+                                  <Download size={16} />
+                                </button>
+                                <button
+                                  onClick={() => handleRefresh(report.id)}
+                                  className="text-amber-600 hover:text-amber-800 p-1 rounded hover:bg-amber-50"
+                                  title="Refresh"
+                                >
+                                  <RefreshCw size={16} />
+                                </button>
+                                <button
+                                  onClick={() => handleDelete(report.id)}
+                                  className="text-red-600 hover:text-red-800 p-1 rounded hover:bg-red-50"
+                                  title="Delete"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
                             </td>
-                          </motion.tr>
+                          </tr>
                         ))
                       )}
                     </tbody>
                   </table>
-                </motion.div>
+                </div>
               )}
 
               {/* Pagination */}
               {!loading && filteredReports.length > 0 && (
-                <div className="flex items-center justify-between mt-3 text-xs text-gray-700">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-3 text-xs text-gray-700">
                   <div>
                     Showing {indexOfFirstItem + 1} to{" "}
                     {Math.min(indexOfLastItem, filteredReports.length)} of{" "}
@@ -833,6 +855,155 @@ const AdMeasurementReports = () => {
         </div>
       </div>
 
+      {/* View Report Modal */}
+      {isModalOpen && selectedReport && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            {/* Background overlay */}
+            <div 
+              className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+              onClick={closeModal}
+            ></div>
+
+            {/* Modal panel */}
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full max-w-lg sm:max-w-2xl sm:my-8 sm:align-middle">
+              <div className="bg-dark-blue px-4 py-3 flex justify-between items-center">
+                <h3 className="text-lg font-medium text-white">
+                  Report Details - {selectedReport.id}
+                </h3>
+                <button
+                  onClick={closeModal}
+                  className="text-white hover:text-gray-200"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Left Column */}
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Report ID</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedReport.id}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Report Name</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200 break-words">
+                        {selectedReport.name}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Description</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedReport.description || 'No description available'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Request Type</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {getRequestTypeLabel(selectedReport.type)}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Advertiser</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedReport.advertiser || 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Agency</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedReport.agency || 'WPP Media'}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Right Column */}
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Start Date</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {formatDate(selectedReport.start_date)}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">End Date</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {formatDate(selectedReport.end_date)}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Status</label>
+                      <div className="text-sm">
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full inline-block ${getStatusBadgeClass(selectedReport.status)}`}>
+                          {selectedReport.status}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Created On</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedReport.created_at}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Audiences</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedReport.audiences ? selectedReport.audiences.join(', ') : 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Datasource Groups</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedReport.datasource_groups ? selectedReport.datasource_groups.join(', ') : 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Tags</label>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedReport.tags && selectedReport.tags.length > 0 ? (
+                          selectedReport.tags.map((tag, index) => (
+                            <span key={index} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">
+                              {tag}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-sm text-gray-500">No tags</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Create/Edit Report Modal */}
       <AnimatePresence>
         {showCreateModal && (
@@ -847,16 +1018,16 @@ const AdMeasurementReports = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-blue-600 p-4 rounded-t-xl flex items-center justify-between sticky top-0">
+              <div className="bg-dark-blue p-4 rounded-t-xl flex items-center justify-between sticky top-0">
                 <h2 className="text-white text-lg font-semibold">
                   {isEditMode ? "Edit Report" : "Create Report"}
                 </h2>
                 <button
                   onClick={handleCloseModal}
-                  className="text-white hover:text-blue-200 transition-colors"
+                  className="text-white hover:text-gray-200 transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -875,7 +1046,7 @@ const AdMeasurementReports = () => {
                     id="displayName"
                     value={formData.displayName}
                     onChange={handleFormChange}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     placeholder="Enter report name"
                   />
                 </div>
@@ -891,7 +1062,7 @@ const AdMeasurementReports = () => {
                     id="requestType"
                     value={formData.requestType}
                     onChange={handleFormChange}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                   >
                     <option value="ESSENTIALS">
                       Ads - Audience Essentials
@@ -905,7 +1076,7 @@ const AdMeasurementReports = () => {
                   </select>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                   <div>
                     <label
                       htmlFor="startDate"
@@ -918,7 +1089,7 @@ const AdMeasurementReports = () => {
                       id="startDate"
                       value={formData.startDate}
                       onChange={handleFormChange}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     />
                   </div>
 
@@ -934,7 +1105,7 @@ const AdMeasurementReports = () => {
                       id="endDate"
                       value={formData.endDate}
                       onChange={handleFormChange}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     />
                   </div>
                 </div>
@@ -950,7 +1121,7 @@ const AdMeasurementReports = () => {
                     id="currencyOfRecord"
                     value={formData.currencyOfRecord}
                     onChange={handleFormChange}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                   >
                     <option value="24">2023-24 Currency</option>
                     <option value="25">2024-25 Currency</option>
@@ -967,7 +1138,7 @@ const AdMeasurementReports = () => {
                   </label>
                   {loadingOptions ? (
                     <div className="flex items-center justify-center py-4">
-                      <div className="w-6 h-6 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                      <div className="w-6 h-6 border-2 border-blue-200 border-t-dark-blue rounded-full animate-spin"></div>
                     </div>
                   ) : (
                     <select
@@ -982,7 +1153,7 @@ const AdMeasurementReports = () => {
                             : [...prev.audienceIds, value],
                         }));
                       }}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     >
                       {audienceOptions.map((audience) => (
                         <option
@@ -1005,7 +1176,7 @@ const AdMeasurementReports = () => {
                   </label>
                   {loadingOptions ? (
                     <div className="flex items-center justify-center py-4">
-                      <div className="w-6 h-6 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                      <div className="w-6 h-6 border-2 border-blue-200 border-t-dark-blue rounded-full animate-spin"></div>
                     </div>
                   ) : (
                     <select
@@ -1024,7 +1195,7 @@ const AdMeasurementReports = () => {
                             : [...prev.datasourceGroupIds, value],
                         }));
                       }}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     >
                       {datasourceGroupOptions.map((group) => (
                         <option key={group.id} value={group.id}>
@@ -1035,17 +1206,17 @@ const AdMeasurementReports = () => {
                   )}
                 </div>
 
-                <div className="flex justify-end gap-2">
+                <div className="flex flex-col sm:flex-row sm:justify-end gap-2">
                   <button
                     type="button"
                     onClick={handleCloseModal}
-                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors"
+                    className="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
+                    className="w-full sm:w-auto px-4 py-2 bg-dark-blue text-white rounded-full text-sm font-medium hover:bg-dark-blue/80 transition-colors"
                   >
                     {isEditMode ? "Update" : "Submit"}
                   </button>

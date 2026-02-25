@@ -4,7 +4,7 @@ import { Menu, Upload } from "lucide-react";
 import Sidebar from "./Sidebar";
 import logo from "../assets/logo-wpp-media.png";
 import { useNavigate } from "react-router-dom";
-import bg from "../assets/background-gradient-lights.jpg"
+import bg from "../assets/background-gradient-lights.jpg";
 
 const UploadVideoAmp = () => {
   const navigate = useNavigate();
@@ -26,18 +26,18 @@ const UploadVideoAmp = () => {
     if (selectedFile) {
       alert(`Uploading: ${selectedFile.name}`);
     } else {
-      alert('Please select a file first');
+      alert("Please select a file first");
     }
   };
 
   return (
-    <div 
-      className="min-h-screen relative overflow-hidden"
-      style={{ 
+    <div
+      className="min-h-screen relative overflow-x-hidden"
+      style={{
         backgroundImage: `url(${bg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
       }}
     >
       {/* Subtle overlay to soften the background */}
@@ -46,7 +46,7 @@ const UploadVideoAmp = () => {
       {/* Content with relative positioning to appear above overlay */}
       <div className="relative z-10">
         {/* Fixed Header */}
-        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 backdrop-blur-md z-40 h-20">
+        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-md z-40 h-16 sm:h-20">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -63,7 +63,7 @@ const UploadVideoAmp = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { state: { isExpanded: true } })}
             />
           </div>
 
@@ -84,83 +84,131 @@ const UploadVideoAmp = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "ml-80" : "ml-0"
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
+            sidebarOpen ? "lg:ml-80" : "ml-0"
           }`}
         >
           <main
-            className="px-6 py-3 overflow-y-auto"
-            style={{ maxHeight: "calc(100vh - 80px)" }}
+            className="px-4 sm:px-6 py-4 overflow-y-auto"
+            style={{ maxHeight: "calc(100vh - 4rem)" }}
           >
             {/* Main content container */}
             <div className="p-2 md:p-3">
-              <h1 className="text-4xl font-display font-bold text-dark-blue mb-1">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-dark-blue mb-2">
                 VideoAmp File Upload
               </h1>
 
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg 
-                p-4 md:p-6 mt-6 
-                max-w-5xl mx-auto">
-                <p className="text-dark-blue/70 mb-4">
+              <div
+                className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg 
+                p-4 sm:p-5 mt-5 
+                w-full max-w-5xl mx-auto"
+              >
+                <p className="text-dark-blue/70 mb-3">
                   Please upload a CSV with the following columns:
                 </p>
 
                 {/* Required Columns Table */}
-                <div className="overflow-x-auto rounded-lg border border-dark-blue/20 mb-6">
+                <div className="overflow-x-auto rounded-lg border border-dark-blue/20 mb-5">
                   <table className="min-w-full divide-y divide-dark-blue/20">
-                    <thead className="bg-dark-blue/10">
+                    <thead className="bg-dark-blue">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-semibold text-dark-blue uppercase tracking-wider">
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
                           Column Name
                         </th>
-                        <th className="px-6 py-3 text-left text-xs font-semibold text-dark-blue uppercase tracking-wider">
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">
                           Type
                         </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white/50 divide-y divide-dark-blue/10">
-                      <tr><td className="px-6 py-3 text-sm text-dark-blue">display_name</td><td className="px-6 py-3 text-sm text-dark-blue/70">String</td></tr>
-                      <tr><td className="px-6 py-3 text-sm text-dark-blue">platform</td><td className="px-6 py-3 text-sm text-dark-blue/70">String</td></tr>
-                      <tr><td className="px-6 py-3 text-sm text-dark-blue">daypart</td><td className="px-6 py-3 text-sm text-dark-blue/70">String</td></tr>
-                      <tr><td className="px-6 py-3 text-sm text-dark-blue">cost_per_unit</td><td className="px-6 py-3 text-sm text-dark-blue/70">Float</td></tr>
-                      <tr><td className="px-6 py-3 text-sm text-dark-blue">impressions_per_unit</td><td className="px-6 py-3 text-sm text-dark-blue/70">Float</td></tr>
-                      <tr><td className="px-6 py-3 text-sm text-dark-blue">cpm</td><td className="px-6 py-3 text-sm text-dark-blue/70">Float</td></tr>
+                      <tr>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          display_name
+                        </td>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          String
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          platform
+                        </td>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          String
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          daypart
+                        </td>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          String
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          cost_per_unit
+                        </td>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          Float
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          impressions_per_unit
+                        </td>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          Float
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          cpm
+                        </td>
+                        <td className="px-3 sm:px-6 py-2 sm:py-3 text-sm text-dark-blue">
+                          Float
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
 
-                <p className="text-dark-blue/70 mb-4">
-                  Here is a link to what your sheet must look like: <a href="#" className="text-blue-600 hover:underline">sheet here</a>
+                <p className="text-dark-blue/70 mb-3">
+                  Here is a link to what your sheet must look like:{" "}
+                  <a href="#" className="text-blue-600 hover:underline">
+                    sheet here
+                  </a>
                 </p>
 
                 {/* File Input */}
-                <div className="flex items-center gap-4 mb-4">
-                  <input 
-                    type="file" 
-                    ref={fileInputRef}
-                    accept=".csv"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                  <button 
-                    onClick={triggerFileInput}
-                    className="px-4 py-2 border border-dark-blue/30 rounded-lg bg-white hover:bg-gray-50 text-dark-blue"
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      accept=".csv"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
+                    <button
+                      onClick={triggerFileInput}
+                      className="px-4 py-2 border border-dark-blue/30 rounded-lg bg-white hover:bg-gray-50 text-dark-blue"
+                    >
+                      Browse
+                    </button>
+                    <span className="text-dark-blue/70 text-sm break-all">
+                      {selectedFile ? selectedFile.name : "No file chosen"}
+                    </span>
+                  </div>
+                  {/* Upload Button */}
+                  <button
+                    onClick={handleUpload}
+                    className="w-full sm:w-auto px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors inline-flex items-center justify-center gap-2"
                   >
-                    Browse
+                    <Upload size={18} />
+                    Upload
                   </button>
-                  <span className="text-dark-blue/70">
-                    {selectedFile ? selectedFile.name : 'No file chosen'}
-                  </span>
                 </div>
-
-                {/* Upload Button */}
-                <button 
-                  onClick={handleUpload}
-                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors inline-flex items-center gap-2"
-                >
-                  <Upload size={18} />
-                  Upload
-                </button>
               </div>
             </div>
           </main>

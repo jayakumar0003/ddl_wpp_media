@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
   Eye,
-  MoreVertical,
   ArrowLeft,
   Plus,
   Calendar,
@@ -24,7 +23,8 @@ const VACampaignPlanning = () => {
   const [loading, setLoading] = useState(true);
   const [campaigns, setCampaigns] = useState([]);
   const [filteredCampaigns, setFilteredCampaigns] = useState([]);
-  const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   // Filter states
@@ -60,7 +60,7 @@ const VACampaignPlanning = () => {
     { audienceUUId: "aud-010", name: "Baby Boomers" },
   ];
 
-  // Temporary data
+  // Enhanced temporary data with additional fields
   const tempCampaigns = [
     {
       id: 1,
@@ -70,6 +70,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "USD",
       created_at: "2025-03-15 10:30 AM",
       status: "active",
+      description: "Summer sales campaign targeting young adults with seasonal promotions",
+      budget: 50000,
+      target_audience: "Adults 18-34",
+      creative_durations: [15, 30],
+      agency: "WPP Media",
+      advertiser: "Summer Brands Inc.",
+      tags: ["summer", "sales", "seasonal"]
     },
     {
       id: 2,
@@ -79,6 +86,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "USD",
       created_at: "2025-04-20 02:15 PM",
       status: "draft",
+      description: "Q4 holiday campaign featuring gift guides and special promotions",
+      budget: 75000,
+      target_audience: "All Adults",
+      creative_durations: [15, 30, 60],
+      agency: "WPP Media",
+      advertiser: "Holiday Retail Co.",
+      tags: ["holiday", "q4", "gifts"]
     },
     {
       id: 3,
@@ -88,6 +102,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "EUR",
       created_at: "2025-02-10 09:45 AM",
       status: "completed",
+      description: "Spring product launch campaign for new line of consumer goods",
+      budget: 60000,
+      target_audience: "Early Adopters",
+      creative_durations: [15, 30],
+      agency: "WPP Media Europe",
+      advertiser: "Innovation Labs",
+      tags: ["spring", "launch", "new products"]
     },
     {
       id: 4,
@@ -97,6 +118,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "USD",
       created_at: "2025-05-05 11:20 AM",
       status: "active",
+      description: "Back to school campaign targeting parents and students",
+      budget: 45000,
+      target_audience: "Parents, Students",
+      creative_durations: [15, 30],
+      agency: "WPP Media",
+      advertiser: "School Supplies Co.",
+      tags: ["back-to-school", "education", "parents"]
     },
     {
       id: 5,
@@ -106,6 +134,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "USD",
       created_at: "2025-06-18 03:30 PM",
       status: "planned",
+      description: "Black Friday weekend flash sale campaign",
+      budget: 100000,
+      target_audience: "Deal Seekers",
+      creative_durations: [15, 30],
+      agency: "WPP Media",
+      advertiser: "Retail Giant",
+      tags: ["black-friday", "holiday", "sales"]
     },
     {
       id: 6,
@@ -115,6 +150,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "GBP",
       created_at: "2025-07-22 10:00 AM",
       status: "planned",
+      description: "New Year resolution themed campaign for fitness and wellness products",
+      budget: 55000,
+      target_audience: "Fitness Enthusiasts",
+      creative_durations: [15, 30, 45],
+      agency: "WPP Media UK",
+      advertiser: "Wellness Brands",
+      tags: ["new-year", "fitness", "wellness"]
     },
     {
       id: 7,
@@ -124,6 +166,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "USD",
       created_at: "2025-08-14 01:45 PM",
       status: "draft",
+      description: "Valentine's Day campaign for gift and experience brands",
+      budget: 40000,
+      target_audience: "Couples",
+      creative_durations: [15, 30],
+      agency: "WPP Media",
+      advertiser: "Gift Co.",
+      tags: ["valentine", "gifts", "romance"]
     },
     {
       id: 8,
@@ -133,6 +182,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "CAD",
       created_at: "2025-09-01 11:15 AM",
       status: "draft",
+      description: "Spring clearance sale campaign for fashion retailers",
+      budget: 35000,
+      target_audience: "Fashion Shoppers",
+      creative_durations: [15, 30],
+      agency: "WPP Media Canada",
+      advertiser: "Fashion Outlet",
+      tags: ["spring", "clearance", "fashion"]
     },
     {
       id: 9,
@@ -142,6 +198,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "USD",
       created_at: "2025-10-05 02:30 PM",
       status: "planned",
+      description: "Summer music festival sponsorship and promotion campaign",
+      budget: 80000,
+      target_audience: "Music Fans",
+      creative_durations: [15, 30, 60],
+      agency: "WPP Media",
+      advertiser: "Festival Productions",
+      tags: ["summer", "music", "festival"]
     },
     {
       id: 10,
@@ -151,6 +214,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "USD",
       created_at: "2025-11-12 09:00 AM",
       status: "draft",
+      description: "College-focused back to school campaign for dorm essentials",
+      budget: 50000,
+      target_audience: "College Students",
+      creative_durations: [15, 30],
+      agency: "WPP Media",
+      advertiser: "Campus Supplies",
+      tags: ["college", "back-to-school", "students"]
     },
     {
       id: 11,
@@ -160,6 +230,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "USD",
       created_at: "2025-12-03 04:20 PM",
       status: "planned",
+      description: "Halloween themed campaign for costumes and candy brands",
+      budget: 45000,
+      target_audience: "Families, Young Adults",
+      creative_durations: [15, 30],
+      agency: "WPP Media",
+      advertiser: "Halloween Brands",
+      tags: ["halloween", "seasonal", "costumes"]
     },
     {
       id: 12,
@@ -169,6 +246,13 @@ const VACampaignPlanning = () => {
       currency_of_record: "GBP",
       created_at: "2026-01-18 10:45 AM",
       status: "draft",
+      description: "Christmas gift guide campaign featuring curated product selections",
+      budget: 90000,
+      target_audience: "Holiday Shoppers",
+      creative_durations: [15, 30, 45],
+      agency: "WPP Media UK",
+      advertiser: "Gift Guide Ltd.",
+      tags: ["christmas", "gifts", "holiday"]
     },
   ];
 
@@ -207,9 +291,14 @@ const VACampaignPlanning = () => {
     setCurrentPage(1);
   }, [searchTerm, campaigns]);
 
-  const handleView = (id) => {
-    navigate(`/view-campaign?id=${id}`);
-    setDropdownOpen(null);
+  const handleView = (campaign) => {
+    setSelectedCampaign(campaign);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedCampaign(null);
   };
 
   const handleCreateCampaign = () => {
@@ -277,21 +366,6 @@ const VACampaignPlanning = () => {
     handleCloseModal();
   };
 
-  const toggleDropdown = (id) => {
-    setDropdownOpen(dropdownOpen === id ? null : id);
-  };
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = () => {
-      setDropdownOpen(null);
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
   // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -323,7 +397,7 @@ const VACampaignPlanning = () => {
 
   return (
     <div
-      className="min-h-screen relative overflow-hidden"
+      className="min-h-screen relative overflow-x-hidden"
       style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
@@ -337,7 +411,7 @@ const VACampaignPlanning = () => {
       {/* Content with relative positioning to appear above overlay */}
       <div className="relative z-10">
         {/* Fixed Header */}
-        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 backdrop-blur-md z-40 h-20">
+        <header className="fixed top-0 left-0 w-full flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-md z-40 h-16 sm:h-20">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -354,7 +428,7 @@ const VACampaignPlanning = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { state: { isExpanded: true } })}
             />
           </div>
 
@@ -375,41 +449,38 @@ const VACampaignPlanning = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "ml-80" : "ml-0"
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
+            sidebarOpen ? "lg:ml-80" : "ml-0"
           }`}
         >
           <main className="px-4 py-3">
-            {/* Main content container - reduced size like audience page */}
-            <div className="max-w-6xl mx-auto bg-white rounded-xl p-4 md:p-5 shadow-lg">
+            {/* Main content container */}
+            <div className="w-full max-w-7xl mx-auto bg-white rounded-xl p-4 sm:p-5 shadow-lg">
               {/* Page Header - Blue */}
-              <div className="bg-blue-600 rounded-lg p-3 mb-5 flex items-center justify-between">
+              <div className="bg-dark-blue rounded-lg p-3 mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <h2 className="text-white text-lg md:text-xl font-semibold">
-                    Campaigns
+                    VA Campaigns Planning
                   </h2>
                 </div>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={handleCreateCampaign}
-                  className="bg-white text-blue-600 px-3 py-1.5 rounded-full text-xs md:text-sm font-medium hover:bg-gray-100 transition-colors inline-flex items-center gap-1"
+                  className="bg-lemon/90 text-dark-blue px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium hover:bg-lemon transition-colors whitespace-nowrap inline-flex items-center gap-1"
                 >
                   <Plus size={14} />
                   Create Campaign
-                </motion.button>
+                </button>
               </div>
 
-              {/* Filter Row - like audience page */}
-              <div className="mb-4 items-center">
-                
-                <div className="relative w-80">
+              {/* Filter Row */}
+              <div className="mb-4">
+              <div className="relative w-full sm:w-80">
                   <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-8 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    placeholder="Search..."
+                    className="w-full pl-8 pr-3 py-2 text-sm border border-dark-blue/20 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
+                    placeholder="Search campaigns..."
                   />
                   <Search
                     className="absolute left-2 top-2.5 text-gray-400"
@@ -420,31 +491,18 @@ const VACampaignPlanning = () => {
 
               {/* Loading Overlay */}
               {loading && (
-                <div className="flex items-center justify-center py-12">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                    className="w-10 h-10 border-3 border-blue-200 border-t-blue-600 rounded-full"
-                  />
+                <div className="fixed inset-0 bg-white/30 flex items-center justify-center z-50">
+                  <div className="w-12 h-12 border-3 border-blue-200 border-t-dark-blue rounded-full animate-spin"></div>
                 </div>
               )}
 
-              {/* Table - compact like audience page */}
+              {/* Table */}
               {!loading && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-                >
-                  <table className="w-full table-fixed divide-y divide-gray-200">
-                    <thead className="bg-blue-600">
+                <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto">
+                  <table className="min-w-[900px] w-full table-fixed divide-y divide-gray-200">
+                    <thead className="bg-dark-blue">
                       <tr>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[200px]">
+                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[150px]">
                           Name
                         </th>
                         <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[90px]">
@@ -462,7 +520,7 @@ const VACampaignPlanning = () => {
                         <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px]">
                           Status
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[50px]"></th>
+                        <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[30px]"></th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -476,12 +534,9 @@ const VACampaignPlanning = () => {
                           </td>
                         </tr>
                       ) : (
-                        currentItems.map((campaign, index) => (
-                          <motion.tr
+                        currentItems.map((campaign) => (
+                          <tr
                             key={campaign.id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.05 }}
                             className="hover:bg-gray-50"
                           >
                             <td className="px-3 py-2 text-xs text-gray-900 font-medium break-words whitespace-normal">
@@ -537,47 +592,28 @@ const VACampaignPlanning = () => {
                                   campaign.status.slice(1)}
                               </span>
                             </td>
-                            <td className="px-3 py-2 align-top relative">
+                            <td className="px-3 py-2 align-top">
                               <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleDropdown(campaign.id);
-                                }}
-                                className="text-gray-600 hover:text-gray-900"
-                              >
-                                <MoreVertical size={14} />
-                              </motion.button>
-
-                              {/* Dropdown menu */}
-                              {dropdownOpen === campaign.id && (
-                                <motion.div
-                                  initial={{ opacity: 0, scale: 0.95 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  className="absolute right-0 mt-1 w-28 bg-white rounded-md shadow-lg border border-gray-200 z-10"
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  onClick={() => handleView(campaign)}
+                                  className="text-blue-600 hover:text-blue-800"
+                                  title="View"
                                 >
-                                  <button
-                                    onClick={() => handleView(campaign.id)}
-                                    className="w-full text-left px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 flex items-center gap-1"
-                                  >
-                                    <Eye size={12} />
-                                    View
-                                  </button>
-                                </motion.div>
-                              )}
+                                  <Eye size={16} />
+                                </motion.button>
                             </td>
-                          </motion.tr>
+                          </tr>
                         ))
                       )}
                     </tbody>
                   </table>
-                </motion.div>
+                </div>
               )}
 
-              {/* Pagination - like audience page */}
+              {/* Pagination */}
               {!loading && filteredCampaigns.length > 0 && (
-                <div className="flex items-center justify-between mt-3 text-xs text-gray-700">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-3 text-xs text-gray-700">
                   <div>
                     Showing {indexOfFirstItem + 1} to{" "}
                     {Math.min(indexOfLastItem, filteredCampaigns.length)} of{" "}
@@ -618,6 +654,155 @@ const VACampaignPlanning = () => {
         </div>
       </div>
 
+      {/* View Campaign Modal */}
+      {isModalOpen && selectedCampaign && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            {/* Background overlay */}
+            <div 
+              className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+              onClick={closeModal}
+            ></div>
+
+            {/* Modal panel */}
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-full max-w-lg sm:max-w-2xl sm:my-8 sm:align-middle">
+              <div className="bg-dark-blue px-4 py-3 flex justify-between items-center">
+                <h3 className="text-lg font-medium text-white">
+                  Campaign Details - {selectedCampaign.display_name}
+                </h3>
+                <button
+                  onClick={closeModal}
+                  className="text-white hover:text-gray-200"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Left Column */}
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Campaign ID</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedCampaign.id}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Display Name</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200 break-words">
+                        {selectedCampaign.display_name}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Description</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedCampaign.description || 'No description available'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Target Audience</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedCampaign.target_audience || 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Budget</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedCampaign.budget ? `${selectedCampaign.currency_of_record} ${selectedCampaign.budget.toLocaleString()}` : 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Creative Durations (sec)</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedCampaign.creative_durations ? selectedCampaign.creative_durations.join(', ') : 'N/A'}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Right Column */}
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Start Date</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {formatDate(selectedCampaign.media_start_date)}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">End Date</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {formatDate(selectedCampaign.media_end_date)}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Currency</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedCampaign.currency_of_record}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Status</label>
+                      <div className="text-sm">
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full inline-block ${getStatusBadgeClass(selectedCampaign.status)}`}>
+                          {selectedCampaign.status.charAt(0).toUpperCase() + selectedCampaign.status.slice(1)}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Created On</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedCampaign.created_at}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Agency / Advertiser</label>
+                      <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
+                        {selectedCampaign.agency || 'WPP Media'} / {selectedCampaign.advertiser || 'N/A'}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Tags</label>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedCampaign.tags && selectedCampaign.tags.length > 0 ? (
+                          selectedCampaign.tags.map((tag, index) => (
+                            <span key={index} className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">
+                              {tag}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-sm text-gray-500">No tags</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Create Campaign Modal */}
       <AnimatePresence>
         {showCreateModal && (
@@ -632,16 +817,16 @@ const VACampaignPlanning = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-blue-600 p-4 rounded-t-xl flex items-center justify-between">
+              <div className="bg-dark-blue p-4 rounded-t-xl flex items-center justify-between">
                 <h2 className="text-white text-lg font-semibold">
                   Create Campaign
                 </h2>
                 <button
                   onClick={handleCloseModal}
-                  className="text-white hover:text-blue-200 transition-colors"
+                  className="text-white hover:text-gray-200 transition-colors"
                 >
                   <X size={20} />
                 </button>
@@ -660,7 +845,7 @@ const VACampaignPlanning = () => {
                     id="displayName"
                     value={formData.displayName}
                     onChange={handleFormChange}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     placeholder="Enter campaign name"
                   />
                 </div>
@@ -681,7 +866,7 @@ const VACampaignPlanning = () => {
                         audienceIds: [e.target.value],
                       }))
                     }
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                   >
                     <option value="">Select Audience</option>
                     {audienceOptions.map((audience) => (
@@ -695,7 +880,7 @@ const VACampaignPlanning = () => {
                   </select>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                   <div>
                     <label
                       htmlFor="startDate"
@@ -708,7 +893,7 @@ const VACampaignPlanning = () => {
                       id="startDate"
                       value={formData.startDate}
                       onChange={handleFormChange}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     />
                   </div>
 
@@ -724,7 +909,7 @@ const VACampaignPlanning = () => {
                       id="endDate"
                       value={formData.endDate}
                       onChange={handleFormChange}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     />
                   </div>
                 </div>
@@ -741,7 +926,7 @@ const VACampaignPlanning = () => {
                     id="creativeDuration"
                     value={formData.creativeDuration}
                     onChange={handleFormChange}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-dark-blue"
                     placeholder="e.g., 15, 30, 60"
                   />
                   <p className="text-xs text-gray-500 mt-1">
@@ -757,17 +942,17 @@ const VACampaignPlanning = () => {
                 />
                 <input type="hidden" id="agencyAdvertiserId" value="3252" />
 
-                <div className="flex justify-end gap-2">
+                <div className="flex flex-col sm:flex-row sm:justify-end gap-2">
                   <button
                     type="button"
                     onClick={handleCloseModal}
-                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors"
+                    className="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
+                    className="w-full sm:w-auto px-4 py-2 bg-dark-blue text-white rounded-full text-sm font-medium hover:bg-dark-blue/80 transition-colors"
                   >
                     Submit
                   </button>
