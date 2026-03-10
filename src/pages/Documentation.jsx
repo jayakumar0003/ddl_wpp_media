@@ -13,9 +13,9 @@ const Documentation = () => {
 
 
   return (
-    <div 
+    <div
       className="min-h-screen relative overflow-hidden"
-      style={{ 
+      style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -40,7 +40,7 @@ const Documentation = () => {
             <motion.img
               src={logo}
               alt="WPP Media"
-              className="h-10 sm:h-12 object-contain cursor-pointer"
+              className="h-14 sm:h-18 object-contain cursor-pointer"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -66,21 +66,20 @@ const Documentation = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "ml-80" : "ml-0"
-          }`}
+          className={`pt-20 min-h-screen transition-all duration-300 ${sidebarOpen ? "ml-80" : "ml-0"
+            }`}
         >
           <main
-            className="px-6 py-3 overflow-y-auto"
+            className="px-6 py-3 overflow-y-auto hide-scrollbar"
             style={{ maxHeight: "calc(100vh - 80px)" }}
           >
             {/* Main content container */}
             <div className="p-2 md:p-3">
-              <h1 className="text-3xl font-display font-bold text-dark-blue mb-1">
-              Documentation
+              <h1 className="text-2xl font-display font-bold text-dark-blue mb-1">
+                Documentation
               </h1>
 
-              
+
             </div>
           </main>
         </div>

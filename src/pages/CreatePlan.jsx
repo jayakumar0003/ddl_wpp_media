@@ -102,7 +102,7 @@ const CreatePlan = () => {
             <motion.img
               src={logo}
               alt="WPP Media"
-              className="h-10 sm:h-12 object-contain cursor-pointer"
+              className="h-14 sm:h-18 object-contain cursor-pointer"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -136,17 +136,16 @@ const CreatePlan = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "lg:ml-80" : "ml-0"
-          }`}
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"
+            }`}
         >
           <main
-            className="px-4 sm:px-6 py-4 overflow-y-auto"
+            className="px-4 sm:px-6 py-4 overflow-y-auto hide-scrollbar"
             style={{ maxHeight: "calc(100vh - 80px)" }}
           >
             {/* Semi-transparent content container */}
             <div className="p-2 md:p-3 ">
-              <h1 className="text-2xl  md:text-3xl font-bold text-dark-blue mb-1">
+              <h1 className="text-xl md:text-2xl font-bold text-dark-blue mb-1">
                 Create Plan
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-dark-blue mb-2">Plan a Campaign</p>
@@ -181,7 +180,7 @@ const CreatePlan = () => {
 
                 {/* Dropdown Menu */}
                 {datasetsOpen && (
-                  <div className="absolute z-50 w-full sm:w-80 md:w-96 mt-1 bg-white/90 backdrop-blur-md border border-dark-blue/20 rounded-lg shadow-xl max-h-60 overflow-y-auto">
+                  <div className="absolute z-50 w-full sm:w-80 md:w-96 mt-1 bg-white/90 backdrop-blur-md border border-dark-blue/20 rounded-lg shadow-xl max-h-60 overflow-y-auto hide-scrollbar">
                     <div className="p-3 space-y-2">
                       {availableDatasets.map((ds) => (
                         <label
@@ -232,9 +231,8 @@ const CreatePlan = () => {
                         </span>
                         <ChevronDown
                           size={18}
-                          className={`transform transition-transform ${
-                            showBudgetBreakdown ? "rotate-180" : ""
-                          }`}
+                          className={`transform transition-transform ${showBudgetBreakdown ? "rotate-180" : ""
+                            }`}
                         />
                       </button>
                     </div>
@@ -423,16 +421,14 @@ const CreatePlan = () => {
                     ))}
                     <div className="space-y-1 mt-2">
                       <div
-                        className={`mt-3 text-sm ${
-                          isSpotsValid ? "text-green-600" : "text-red-500"
-                        }`}
+                        className={`mt-3 text-sm ${isSpotsValid ? "text-green-600" : "text-red-500"
+                          }`}
                       >
                         Total: {totalSpots}%
                       </div>
                       <div
-                        className={`mt-3 text-sm ${
-                          isSpotsValid ? "text-green-600" : "text-red-500"
-                        }`}
+                        className={`mt-3 text-sm ${isSpotsValid ? "text-green-600" : "text-red-500"
+                          }`}
                       >
                         Percentages must total 100%
                       </div>

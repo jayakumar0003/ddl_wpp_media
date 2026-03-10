@@ -480,8 +480,7 @@ const AdMeasurementReports = () => {
     // Simulate API call
     setTimeout(() => {
       alert(
-        `Report ${
-          isEditMode ? "updated" : "submitted"
+        `Report ${isEditMode ? "updated" : "submitted"
         } successfully! (Demo mode)`
       );
       setLoadingOverlay(false);
@@ -573,7 +572,7 @@ const AdMeasurementReports = () => {
             <motion.img
               src={logo}
               alt="WPP Media"
-              className="h-10 sm:h-12 object-contain cursor-pointer"
+              className="h-14 sm:h-18 object-contain cursor-pointer"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -599,9 +598,8 @@ const AdMeasurementReports = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "lg:ml-80" : "ml-0"
-          }`}
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"
+            }`}
         >
           <main className="px-4 py-3">
             {/* Main content container */}
@@ -609,7 +607,7 @@ const AdMeasurementReports = () => {
               {/* Page Header - Dark Blue */}
               <div className="bg-dark-blue rounded-lg p-3 mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-white text-lg md:text-xl font-semibold">
+                  <h2 className="text-white text-base md:text-lg font-semibold">
                     Ad Measurement Reports
                   </h2>
                 </div>
@@ -669,7 +667,7 @@ const AdMeasurementReports = () => {
 
               {/* Table */}
               {!loading && (
-                <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto">
+                <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto hide-scrollbar">
                   <table className="min-w-[1200px] w-full table-fixed divide-y divide-gray-200">
                     <thead className="bg-dark-blue">
                       <tr>
@@ -779,11 +777,10 @@ const AdMeasurementReports = () => {
                                 <button
                                   onClick={() => handleDownload(report.id)}
                                   disabled={report.status !== "succeeded"}
-                                  className={`p-1 rounded ${
-                                    report.status === "succeeded"
-                                      ? "text-purple-600 hover:text-purple-800 hover:bg-purple-50"
-                                      : "text-gray-400 cursor-not-allowed"
-                                  }`}
+                                  className={`p-1 rounded ${report.status === "succeeded"
+                                    ? "text-purple-600 hover:text-purple-800 hover:bg-purple-50"
+                                    : "text-gray-400 cursor-not-allowed"
+                                    }`}
                                   title={report.status === "succeeded" ? "Download" : "Download not available"}
                                 >
                                   <Download size={16} />
@@ -826,11 +823,10 @@ const AdMeasurementReports = () => {
                         setCurrentPage((prev) => Math.max(prev - 1, 1))
                       }
                       disabled={currentPage === 1}
-                      className={`px-2 py-1 rounded border text-xs ${
-                        currentPage === 1
-                          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : "bg-white text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`px-2 py-1 rounded border text-xs ${currentPage === 1
+                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        : "bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       Previous
                     </button>
@@ -839,11 +835,10 @@ const AdMeasurementReports = () => {
                         setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                       }
                       disabled={currentPage === totalPages}
-                      className={`px-2 py-1 rounded border text-xs ${
-                        currentPage === totalPages
-                          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : "bg-white text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`px-2 py-1 rounded border text-xs ${currentPage === totalPages
+                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        : "bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       Next
                     </button>
@@ -857,10 +852,10 @@ const AdMeasurementReports = () => {
 
       {/* View Report Modal */}
       {isModalOpen && selectedReport && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+        <div className="fixed inset-0 z-50 overflow-y-auto hide-scrollbar">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             {/* Background overlay */}
-            <div 
+            <div
               className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
               onClick={closeModal}
             ></div>
@@ -878,9 +873,9 @@ const AdMeasurementReports = () => {
                   <X size={20} />
                 </button>
               </div>
-              
+
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Left Column */}
                   <div className="space-y-3">
                     <div>
@@ -889,35 +884,35 @@ const AdMeasurementReports = () => {
                         {selectedReport.id}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Report Name</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200 break-words">
                         {selectedReport.name}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Description</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedReport.description || 'No description available'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Request Type</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {getRequestTypeLabel(selectedReport.type)}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Advertiser</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedReport.advertiser || 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Agency</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
@@ -925,7 +920,7 @@ const AdMeasurementReports = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Right Column */}
                   <div className="space-y-3">
                     <div>
@@ -934,14 +929,14 @@ const AdMeasurementReports = () => {
                         {formatDate(selectedReport.start_date)}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">End Date</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {formatDate(selectedReport.end_date)}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Status</label>
                       <div className="text-sm">
@@ -950,28 +945,28 @@ const AdMeasurementReports = () => {
                         </span>
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Created On</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedReport.created_at}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Audiences</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedReport.audiences ? selectedReport.audiences.join(', ') : 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Datasource Groups</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedReport.datasource_groups ? selectedReport.datasource_groups.join(', ') : 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Tags</label>
                       <div className="flex flex-wrap gap-1">
@@ -989,7 +984,7 @@ const AdMeasurementReports = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
                 <button
                   type="button"
@@ -1018,7 +1013,7 @@ const AdMeasurementReports = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto hide-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="bg-dark-blue p-4 rounded-t-xl flex items-center justify-between sticky top-0">
@@ -1190,8 +1185,8 @@ const AdMeasurementReports = () => {
                             value
                           )
                             ? prev.datasourceGroupIds.filter(
-                                (id) => id !== value
-                              )
+                              (id) => id !== value
+                            )
                             : [...prev.datasourceGroupIds, value],
                         }));
                       }}

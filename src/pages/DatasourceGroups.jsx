@@ -471,8 +471,7 @@ const DatasourceGroups = () => {
     setLoading(true);
     setTimeout(() => {
       alert(
-        `Datasource Group ${
-          isEditMode ? "updated" : "created"
+        `Datasource Group ${isEditMode ? "updated" : "created"
         } successfully! (Demo mode)`
       );
       setLoading(false);
@@ -532,7 +531,7 @@ const DatasourceGroups = () => {
             <motion.img
               src={logo}
               alt="WPP Media"
-              className="h-10 sm:h-12 object-contain cursor-pointer"
+              className="h-14 sm:h-18 object-contain cursor-pointer"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -558,9 +557,8 @@ const DatasourceGroups = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "lg:ml-80" : "ml-0"
-          }`}
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"
+            }`}
         >
           <main className="px-4 py-3">
             {/* Main content container */}
@@ -568,7 +566,7 @@ const DatasourceGroups = () => {
               {/* Page Header - Dark Blue */}
               <div className="bg-dark-blue rounded-lg p-3 mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-white text-lg md:text-xl font-semibold">
+                  <h2 className="text-white text-base md:text-lg font-semibold">
                     Datasource Groups
                   </h2>
                 </div>
@@ -609,7 +607,7 @@ const DatasourceGroups = () => {
 
               {/* Table */}
               {!loading && (
-                <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto">
+                <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto hide-scrollbar">
                   <table className="min-w-[1000px] w-full table-fixed divide-y divide-gray-200">
                     <thead className="bg-dark-blue">
                       <tr>
@@ -740,11 +738,10 @@ const DatasourceGroups = () => {
                         setCurrentPage((prev) => Math.max(prev - 1, 1))
                       }
                       disabled={currentPage === 1}
-                      className={`px-2 py-1 rounded border text-xs ${
-                        currentPage === 1
-                          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : "bg-white text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`px-2 py-1 rounded border text-xs ${currentPage === 1
+                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        : "bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       Previous
                     </button>
@@ -753,11 +750,10 @@ const DatasourceGroups = () => {
                         setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                       }
                       disabled={currentPage === totalPages}
-                      className={`px-2 py-1 rounded border text-xs ${
-                        currentPage === totalPages
-                          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : "bg-white text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`px-2 py-1 rounded border text-xs ${currentPage === totalPages
+                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        : "bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       Next
                     </button>
@@ -771,7 +767,7 @@ const DatasourceGroups = () => {
 
       {/* View Datasource Group Modal */}
       {isModalOpen && selectedGroup && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+        <div className="fixed inset-0 z-50 overflow-y-auto hide-scrollbar">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             {/* Background overlay */}
             <div
@@ -855,7 +851,7 @@ const DatasourceGroups = () => {
                         >
                           {selectedGroup.status
                             ? selectedGroup.status.charAt(0).toUpperCase() +
-                              selectedGroup.status.slice(1)
+                            selectedGroup.status.slice(1)
                             : "N/A"}
                         </span>
                       </div>
@@ -962,7 +958,7 @@ const DatasourceGroups = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto hide-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="bg-dark-blue p-4 rounded-t-xl flex items-center justify-between sticky top-0">

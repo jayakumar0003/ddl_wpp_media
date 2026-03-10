@@ -16,7 +16,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     { name: "Datasource Groups", icon: Database, path: "/datasources" },
     { name: "Ad Measurement Reports", icon: FileCheck, path: "/reports" },
   ];
-  
+
 
   return (
     <AnimatePresence>
@@ -26,7 +26,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           animate={{ x: 0 }}
           exit={{ x: '-100%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="fixed top-20 left-0 h-[calc(100vh-80px)] w-80 bg-white/95 backdrop-blur-xl shadow-2xl z-30 p-6 border-r border-lemon/30 overflow-y-auto"
+          className="fixed top-20 left-0 h-[calc(100vh-80px)] w-80 bg-white/95 backdrop-blur-xl shadow-2xl z-30 p-6 border-r border-lemon/30 overflow-y-auto hide-scrollbar"
         >
           {/* Close button */}
           {/* <button
@@ -47,9 +47,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                     navigate(item.path);
                     onClose(); // optional: close after navigation
                   }}
-                  className={`w-full flex items-center gap-4 px-2 py-3 rounded-xl transition-all duration-200 group ${
-                    isActive ? 'bg-lemon/30' : 'hover:bg-lemon/20'
-                  }`}
+                  className={`w-full flex items-center gap-4 px-2 py-3 rounded-xl transition-all duration-200 group ${isActive ? 'bg-lemon/30' : 'hover:bg-lemon/20'
+                    }`}
                   whileHover={{ x: 5 }}
                   whileTap={{ scale: 0.98 }}
                 >

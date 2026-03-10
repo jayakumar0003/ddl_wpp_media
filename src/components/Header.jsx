@@ -12,10 +12,10 @@ const Header = () => {
         whileHover={{ scale: 1.05 }}
         className="cursor-pointer"
       >
-        <img 
-          src={logo} 
-          alt="WPP Media" 
-          className="h-8 xs:h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 object-contain" 
+        <img
+          src={logo}
+          alt="WPP Media"
+          className="h-10 xs:h-12 sm:h-14 md:h-18 lg:h-20 xl:h-24 object-contain"
         />
       </motion.div>
 

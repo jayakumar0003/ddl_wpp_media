@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { 
-  Menu, 
-  Search, 
-  Filter, 
-  X, 
+import {
+  Menu,
+  Search,
+  Filter,
+  X,
   Eye,
   ArrowLeft,
   ChevronLeft,
@@ -23,7 +23,7 @@ const Audiences = () => {
   const [filteredAudiences, setFilteredAudiences] = useState([]);
   const [selectedAudience, setSelectedAudience] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // Filter states
   const [searchTerm, setSearchTerm] = useState('');
   const [currencyFilter, setCurrencyFilter] = useState('');
@@ -32,7 +32,7 @@ const Audiences = () => {
   const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
   const [appliedCurrencyFilter, setAppliedCurrencyFilter] = useState('');
   const [appliedStatusFilter, setAppliedStatusFilter] = useState('');
-  
+
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -326,29 +326,29 @@ const Audiences = () => {
 
   useEffect(() => {
     let filtered = audiences;
-  
+
     if (appliedSearchTerm) {
       filtered = filtered.filter(audience =>
         audience.name.toLowerCase().includes(appliedSearchTerm.toLowerCase()) ||
         audience.id.toString().includes(appliedSearchTerm)
       );
     }
-  
+
     if (appliedCurrencyFilter) {
       filtered = filtered.filter(audience =>
         audience.currencyOfRecord.toString() === appliedCurrencyFilter
       );
     }
-  
+
     if (appliedStatusFilter) {
       filtered = filtered.filter(audience =>
         audience.status === appliedStatusFilter
       );
     }
-  
+
     setFilteredAudiences(filtered);
     setCurrentPage(1);
-  
+
   }, [appliedSearchTerm, appliedCurrencyFilter, appliedStatusFilter, audiences]);
 
   const handleView = (audience) => {
@@ -365,7 +365,7 @@ const Audiences = () => {
     setSearchTerm('');
     setCurrencyFilter('');
     setStatusFilter('');
-  
+
     setAppliedSearchTerm('');
     setAppliedCurrencyFilter('');
     setAppliedStatusFilter('');
@@ -382,7 +382,7 @@ const Audiences = () => {
   const totalPages = Math.ceil(filteredAudiences.length / itemsPerPage);
 
   const getStatusBadgeClass = (status) => {
-    switch(status) {
+    switch (status) {
       case 'ready':
         return 'bg-green-100 text-green-800';
       case 'processing':
@@ -397,9 +397,9 @@ const Audiences = () => {
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen relative overflow-x-hidden"
-      style={{ 
+      style={{
         backgroundImage: `url(${bg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -424,7 +424,7 @@ const Audiences = () => {
             <motion.img
               src={logo}
               alt="WPP Media"
-              className="h-10 sm:h-12 object-contain cursor-pointer"
+              className="h-14 sm:h-18 object-contain cursor-pointer"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -450,9 +450,8 @@ const Audiences = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "lg:ml-80" : "ml-0"
-          }`}
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"
+            }`}
         >
           <main
             className="px-4 py-3"
@@ -462,9 +461,9 @@ const Audiences = () => {
               {/* Page Header - Blue */}
               <div className="bg-dark-blue rounded-lg p-3 mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-white text-lg md:text-xl font-semibold">Audiences</h2>
+                  <h2 className="text-white text-base md:text-lg font-semibold">Audiences</h2>
                 </div>
-                <button 
+                <button
                   onClick={handleDemographicAudiences}
                   className="bg-lemon/90 text-dark-blue px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium hover:bg-lemon transition-colors whitespace-nowrap"
                 >
@@ -523,7 +522,7 @@ const Audiences = () => {
 
               {/* Apply/Clear Buttons */}
               <div className="flex flex-col sm:flex-row sm:justify-end gap-2 mb-4">
-                <button 
+                <button
                   onClick={() => {
                     setAppliedSearchTerm(searchTerm);
                     setAppliedCurrencyFilter(currencyFilter);
@@ -534,7 +533,7 @@ const Audiences = () => {
                   <Filter size={14} />
                   Apply
                 </button>
-                <button 
+                <button
                   onClick={handleClearFilters}
                   className="w-full sm:w-auto border border-gray-300 text-gray-700 px-3 py-1.5 rounded-full text-xs font-medium hover:bg-gray-50 transition-colors inline-flex items-center gap-1"
                 >
@@ -551,8 +550,8 @@ const Audiences = () => {
               )}
 
               {/* Table */}
-              <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto">
-              <table className="min-w-[800px] w-full table-fixed divide-y divide-gray-200">
+              <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto hide-scrollbar">
+                <table className="min-w-[800px] w-full table-fixed divide-y divide-gray-200">
                   <thead className="bg-dark-blue">
                     <tr>
                       <th className="px-3 py-2 text-left text-xs font-medium text-white uppercase tracking-wider w-[70px]">ID</th>
@@ -585,15 +584,15 @@ const Audiences = () => {
                             </span>
                           </td>
                           <td className="px-3 py-2 align-top">
-                          <motion.button
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.95 }}
+                            <motion.button
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
                               onClick={() => handleView(audience)}
                               className="text-blue-600 hover:text-blue-800"
                               title="View Details"
                             >
                               <Eye size={16} />
-                              </motion.button>
+                            </motion.button>
                           </td>
                         </tr>
                       ))
@@ -612,22 +611,20 @@ const Audiences = () => {
                     <button
                       onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                       disabled={currentPage === 1}
-                      className={`px-2 py-1 rounded border text-xs ${
-                        currentPage === 1 
-                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                          : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}
+                      className={`px-2 py-1 rounded border text-xs ${currentPage === 1
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                        }`}
                     >
                       Previous
                     </button>
                     <button
                       onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                       disabled={currentPage === totalPages}
-                      className={`px-2 py-1 rounded border text-xs ${
-                        currentPage === totalPages 
-                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                          : 'bg-white text-gray-700 hover:bg-gray-50'
-                      }`}
+                      className={`px-2 py-1 rounded border text-xs ${currentPage === totalPages
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                        }`}
                     >
                       Next
                     </button>
@@ -641,10 +638,10 @@ const Audiences = () => {
 
       {/* Modal for viewing audience details */}
       {isModalOpen && selectedAudience && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+        <div className="fixed inset-0 z-50 overflow-y-auto hide-scrollbar">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             {/* Background overlay */}
-            <div 
+            <div
               className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
               onClick={closeModal}
             ></div>
@@ -662,9 +659,9 @@ const Audiences = () => {
                   <X size={20} />
                 </button>
               </div>
-              
+
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Left Column */}
                   <div className="space-y-3">
                     <div>
@@ -673,28 +670,28 @@ const Audiences = () => {
                         {selectedAudience.id}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Audience Name</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200 break-words">
                         {selectedAudience.name}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Description</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedAudience.description || 'No description available'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Audience Type</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedAudience.audienceType}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Level</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
@@ -702,7 +699,7 @@ const Audiences = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Right Column */}
                   <div className="space-y-3">
                     <div>
@@ -711,7 +708,7 @@ const Audiences = () => {
                         {selectedAudience.currencyOfRecord}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Status</label>
                       <div className="text-sm">
@@ -720,28 +717,28 @@ const Audiences = () => {
                         </span>
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Created Date</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedAudience.createdDate || 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Last Modified</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedAudience.lastModified || 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Owner</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedAudience.owner || 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Tags</label>
                       <div className="flex flex-wrap gap-1">
@@ -759,7 +756,7 @@ const Audiences = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
                 <button
                   type="button"

@@ -423,7 +423,7 @@ const VACampaignPlanning = () => {
             <motion.img
               src={logo}
               alt="WPP Media"
-              className="h-10 sm:h-12 object-contain cursor-pointer"
+              className="h-14 sm:h-18 object-contain cursor-pointer"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -449,9 +449,8 @@ const VACampaignPlanning = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "lg:ml-80" : "ml-0"
-          }`}
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"
+            }`}
         >
           <main className="px-4 py-3">
             {/* Main content container */}
@@ -459,7 +458,7 @@ const VACampaignPlanning = () => {
               {/* Page Header - Blue */}
               <div className="bg-dark-blue rounded-lg p-3 mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-white text-lg md:text-xl font-semibold">
+                  <h2 className="text-white text-base md:text-lg font-semibold">
                     VA Campaigns Planning
                   </h2>
                 </div>
@@ -474,7 +473,7 @@ const VACampaignPlanning = () => {
 
               {/* Filter Row */}
               <div className="mb-4">
-              <div className="relative w-full sm:w-80">
+                <div className="relative w-full sm:w-80">
                   <input
                     type="text"
                     value={searchTerm}
@@ -498,7 +497,7 @@ const VACampaignPlanning = () => {
 
               {/* Table */}
               {!loading && (
-                <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto">
+                <div className="bg-dark-blue rounded-lg border border-gray-200 overflow-x-auto hide-scrollbar">
                   <table className="min-w-[900px] w-full table-fixed divide-y divide-gray-200">
                     <thead className="bg-dark-blue">
                       <tr>
@@ -594,14 +593,14 @@ const VACampaignPlanning = () => {
                             </td>
                             <td className="px-3 py-2 align-top">
                               <motion.button
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.95 }}
-                                  onClick={() => handleView(campaign)}
-                                  className="text-blue-600 hover:text-blue-800"
-                                  title="View"
-                                >
-                                  <Eye size={16} />
-                                </motion.button>
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => handleView(campaign)}
+                                className="text-blue-600 hover:text-blue-800"
+                                title="View"
+                              >
+                                <Eye size={16} />
+                              </motion.button>
                             </td>
                           </tr>
                         ))
@@ -625,11 +624,10 @@ const VACampaignPlanning = () => {
                         setCurrentPage((prev) => Math.max(prev - 1, 1))
                       }
                       disabled={currentPage === 1}
-                      className={`px-2 py-1 rounded border text-xs ${
-                        currentPage === 1
-                          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : "bg-white text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`px-2 py-1 rounded border text-xs ${currentPage === 1
+                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        : "bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       Previous
                     </button>
@@ -638,11 +636,10 @@ const VACampaignPlanning = () => {
                         setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                       }
                       disabled={currentPage === totalPages}
-                      className={`px-2 py-1 rounded border text-xs ${
-                        currentPage === totalPages
-                          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : "bg-white text-gray-700 hover:bg-gray-50"
-                      }`}
+                      className={`px-2 py-1 rounded border text-xs ${currentPage === totalPages
+                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        : "bg-white text-gray-700 hover:bg-gray-50"
+                        }`}
                     >
                       Next
                     </button>
@@ -656,10 +653,10 @@ const VACampaignPlanning = () => {
 
       {/* View Campaign Modal */}
       {isModalOpen && selectedCampaign && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+        <div className="fixed inset-0 z-50 overflow-y-auto hide-scrollbar">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             {/* Background overlay */}
-            <div 
+            <div
               className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
               onClick={closeModal}
             ></div>
@@ -677,9 +674,9 @@ const VACampaignPlanning = () => {
                   <X size={20} />
                 </button>
               </div>
-              
+
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Left Column */}
                   <div className="space-y-3">
                     <div>
@@ -688,35 +685,35 @@ const VACampaignPlanning = () => {
                         {selectedCampaign.id}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Display Name</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200 break-words">
                         {selectedCampaign.display_name}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Description</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedCampaign.description || 'No description available'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Target Audience</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedCampaign.target_audience || 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Budget</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedCampaign.budget ? `${selectedCampaign.currency_of_record} ${selectedCampaign.budget.toLocaleString()}` : 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Creative Durations (sec)</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
@@ -724,7 +721,7 @@ const VACampaignPlanning = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Right Column */}
                   <div className="space-y-3">
                     <div>
@@ -733,21 +730,21 @@ const VACampaignPlanning = () => {
                         {formatDate(selectedCampaign.media_start_date)}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">End Date</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {formatDate(selectedCampaign.media_end_date)}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Currency</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedCampaign.currency_of_record}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Status</label>
                       <div className="text-sm">
@@ -756,21 +753,21 @@ const VACampaignPlanning = () => {
                         </span>
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Created On</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedCampaign.created_at}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Agency / Advertiser</label>
                       <div className="text-sm text-gray-900 bg-gray-50 p-2 rounded border border-gray-200">
                         {selectedCampaign.agency || 'WPP Media'} / {selectedCampaign.advertiser || 'N/A'}
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-xs font-medium text-gray-500 mb-1">Tags</label>
                       <div className="flex flex-wrap gap-1">
@@ -788,7 +785,7 @@ const VACampaignPlanning = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
                 <button
                   type="button"
@@ -817,7 +814,7 @@ const VACampaignPlanning = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-xl shadow-xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto hide-scrollbar"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="bg-dark-blue p-4 rounded-t-xl flex items-center justify-between">

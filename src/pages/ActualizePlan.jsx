@@ -149,7 +149,7 @@ const ActualizePlan = () => {
             <motion.img
               src={logo}
               alt="WPP Media"
-              className="h-10 sm:h-12 object-contain cursor-pointer"
+              className="h-14 sm:h-18 object-contain cursor-pointer"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -175,20 +175,19 @@ const ActualizePlan = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${
-            sidebarOpen ? "lg:ml-80" : "ml-0"
-          }`}
+          className={`pt-16 sm:pt-20 min-h-screen transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"
+            }`}
         >
           <main
-            className="px-4 sm:px-6 py-4 overflow-y-auto"
+            className="px-4 sm:px-6 py-4 overflow-y-auto hide-scrollbar"
             style={{ maxHeight: "calc(100vh - 4rem)" }}
           >
             {/* Main content container */}
             <div className="p-2 md:p-3">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark-blue mb-1">
+              <h1 className="text-xl sm:text-2xl font-bold text-dark-blue mb-1">
                 Actualize Plan Results
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-dark-blue mb-6">
+              <p className="text-base sm:text-lg text-dark-blue mb-6">
                 Upload your files to accurately recalculate metrics based on
                 actuals.
               </p>
@@ -203,9 +202,9 @@ const ActualizePlan = () => {
                   className="p-4 sm:p-6"
                 >
                   <div className="border border-dark-blue/20 rounded-xl overflow-hidden bg-white/80 backdrop-blur-sm">
-                    <div className="bg-gradient-to-r from-lemon/30 to-blue-400/30 p-4">
-                      <h3 className="text-md md:text-xl font-bold text-dark-blue flex items-center gap-2">
-                        <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-dark-blue text-white flex items-center justify-center text-sm">
+                    <div className="bg-dark-blue p-4">
+                      <h3 className="text-md md:text-xl font-bold text-white flex items-center gap-2">
+                        <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-dark-blue flex items-center justify-center text-md">
                           1
                         </span>
                         Upload Original Ranker File
@@ -219,18 +218,16 @@ const ActualizePlan = () => {
                       </p>
 
                       <div
-                        className={`border-2 border-dashed rounded-xl p-4 sm:p-6 md:p-8 text-center transition-colors ${
-                          step1Completed
-                            ? "border-green-500 bg-green-50/50"
-                            : "border-dark-blue/30 hover:border-lemon bg-white/40"
-                        }`}
+                        className={`border-2 border-dashed rounded-xl p-4 sm:p-6 md:p-8 text-center transition-colors ${step1Completed
+                          ? "border-green-500 bg-green-50/50"
+                          : "border-dark-blue/30 hover:border-lemon bg-white/40"
+                          }`}
                       >
                         <Upload
-                          className={`mx-auto mb-4 ${
-                            step1Completed
-                              ? "text-green-500"
-                              : "text-dark-blue/40"
-                          }`}
+                          className={`mx-auto mb-4 ${step1Completed
+                            ? "text-green-500"
+                            : "text-dark-blue/40"
+                            }`}
                           size={48}
                         />
 
@@ -282,18 +279,18 @@ const ActualizePlan = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="mb-6"
+                    className="p-4 sm:p-6"
                   >
                     <div className="border border-dark-blue/20 rounded-xl overflow-hidden bg-white/80 backdrop-blur-sm">
-                      <div className="bg-gradient-to-r from-lemon/30 to-blue-400/30 p-4">
-                        <h3 className="text-xl font-bold text-dark-blue flex items-center gap-2">
-                          <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-dark-blue text-white flex items-center justify-center text-sm">
+                      <div className="bg-dark-blue p-4">
+                        <h3 className="text-md md:text-xl font-bold text-white flex items-center gap-2">
+                          <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-dark-blue flex items-center justify-center text-md">
                             2
                           </span>
                           Upload Modified Actuals File
                         </h3>
                       </div>
-                    
+
                       <div className="p-6">
                         <p className="text-dark-blue/60 mb-4">
                           Upload the file with your changes to Age-Gender Imps
@@ -301,18 +298,16 @@ const ActualizePlan = () => {
                         </p>
 
                         <div
-                          className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
-                            step2Completed
-                              ? "border-green-500 bg-green-50/50"
-                              : "border-dark-blue/30 hover:border-lemon bg-white/40"
-                          }`}
+                          className={`border-2 border-dashed rounded-xl p-4 sm:p-6 md:p-8 text-center transition-colors ${step2Completed
+                            ? "border-green-500 bg-green-50/50"
+                            : "border-dark-blue/30 hover:border-lemon bg-white/40"
+                            }`}
                         >
                           <Upload
-                            className={`mx-auto mb-4 ${
-                              step2Completed
-                                ? "text-green-500"
-                                : "text-dark-blue/40"
-                            }`}
+                            className={`mx-auto mb-4 ${step2Completed
+                              ? "text-green-500"
+                              : "text-dark-blue/40"
+                              }`}
                             size={48}
                           />
 
@@ -333,7 +328,7 @@ const ActualizePlan = () => {
 
                           <button
                             onClick={triggerModifiedFileInput}
-                            className="px-6 py-2 bg-dark-blue text-white rounded-full hover:bg-dark-blue/80 transition-colors inline-flex items-center gap-2"
+                            className="w-full sm:w-auto px-6 py-2 bg-dark-blue text-white rounded-full hover:bg-dark-blue/80 transition-colors inline-flex items-center gap-2"
                           >
                             <FileText size={18} />
                             Choose Modified File
@@ -386,7 +381,7 @@ const ActualizePlan = () => {
                         </>
                       )}
                     </motion.button>
-  
+
                     <div className="mt-4">{processStatus}</div>
                   </motion.div>
                 )}
