@@ -84,7 +84,7 @@ const UploadVideoAmp = () => {
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div
-          className={`pt-10 sm:pt-24 min-h-screen transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"
+          className={`pt-10 sm:pt-20 min-h-screen transition-all duration-300 ${sidebarOpen ? "lg:ml-80" : "ml-0"
             }`}
         >
           <main
@@ -99,7 +99,7 @@ const UploadVideoAmp = () => {
 
               <div
                 className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg 
-                mt-3 w-full max-w-5xl mx-auto overflow-hidden"
+                mt-9 w-full max-w-5xl mx-auto overflow-hidden"
               >
                 <div className="bg-dark-blue p-3">
                   <h3 className="text-md md:text-xl font-bold text-white flex items-center gap-2">
